@@ -1,0 +1,30 @@
+{
+    "name": "enors/siat",
+    "description": "Siat library",
+    "type": "library",
+    "license": "Apache-2.0",
+    "autoload": {
+        "psr-4": {
+            "Enors\\Siat\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Jorge Moreira",
+            "email": "jmoreira@linkux-it.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require-dev": {
+        "phpunit/phpunit": "9.5.x-dev",
+        "fzaninotto/faker": "1.9.x-dev"
+    },
+    "require": {
+        "php": "^7.0",
+        "kingson-de/marshal-xml-serializer": "dev-master"
+    },
+    "scripts": {
+        "test": "phpunit",
+        "quicktest": "phpunit --no-coverage"
+    }
+}
