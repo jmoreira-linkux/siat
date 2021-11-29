@@ -5,6 +5,8 @@ namespace Enors\Siat;
 use Enors\Siat\Utils\Base16;
 use Enors\Siat\Utils\Module11;
 
+use \SoapClient;
+
 class Siat
 {
     const AMBIENTE_PRODUCCION = 1;
@@ -21,7 +23,7 @@ class Siat
         int $codigoAmbiente = 2,
         int $codigoModalidad = 2,
         int $codigoSucursal = 0,
-        int $codigoPuntoVenta = 0,
+        int $codigoPuntoVenta = 0
     ) {
         $this->codigoSistema = $codigoSistema;
         $this->nit = $nit;
@@ -29,8 +31,7 @@ class Siat
         $this->codigoModalidad = $codigoModalidad;
         $this->codigoSucursal = $codigoSucursal;
         $this->codigoPuntoVenta = $codigoPuntoVenta;
-
-        $this->client = new SoapClient(self::SIAT_WSDL);
+        // $this->client = new SoapClient(self::SIAT_WSDL);
     }
 
     public function solicitarCUIS()
