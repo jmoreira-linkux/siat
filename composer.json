@@ -17,13 +17,15 @@
     "minimum-stability": "dev",
     "require-dev": {
         "phpunit/phpunit": "9.5.x-dev",
-        "fzaninotto/faker": "1.9.x-dev"
+        "fzaninotto/faker": "1.9.x-dev",
+        "squizlabs/php_codesniffer": "4.0.x-dev"
     },
     "require": {
         "php": "^7.0",
         "kingson-de/marshal-xml-serializer": "dev-master"
     },
     "scripts": {
+        "lint": "phpcs",
         "test": "phpunit",
         "quicktest": "phpunit --no-coverage"
     }
