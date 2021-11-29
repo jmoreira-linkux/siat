@@ -6,8 +6,8 @@ class FacturaCompraVenta
 {
     public function __construct(
         int $nitEmisor,
-        string razonSocialEmisor,
-        string municipio
+        string $razonSocialEmisor,
+        string $municipio
     ) {
         $this->nitEmisor = $nitEmisor;
         $this->razonSocialEmisor = $razonSocialEmisor;
