@@ -25,7 +25,8 @@ class Siat
 
     const TIPO_DOCUMENTO_SECTOR_FACTURA_COMPRA_VENTA = 1;
 
-    const SIAT_WSDL = ' https://pilotosiatservicios.impuestos.gob.bo/v2/ServicioFacturacionComputarizada?wsdl';
+    const SIAT_WSDL = 'https://pilotosiatservicios.impuestos.gob.bo/v2/ServicioFacturacionComputarizada?wsdl';
+    const SIAT_AUTENTICACION_WSDL = 'https://pilotosiatservicios.impuestos.gob.bo/v1/ServicioAutenticacionSoap?wsdl';
 
     public function __construct(
         string $codigoSistema,
@@ -42,6 +43,26 @@ class Siat
         $this->codigoSucursal = $codigoSucursal;
         $this->codigoPuntoVenta = $codigoPuntoVenta;
         // $this->client = new SoapClient(self::SIAT_WSDL);
+    }
+
+    private function getAuthClient()
+    {
+        if (!isset($this->authClient)) {
+            $this->authClient = new SoapClient(self::SIAT_AUTENTICACION_WSDL);
+        }
+        return $this->authClient;
+    }
+
+    public function generarToken($username, $password)
+    {
+        $client = $this->getAuthClient();
+        return $client->token([
+            'DatosUsuarioRequest' => [
+                'nit' => $this->nit,
+                'login' => $username,
+                'password' => $password,
+            ]
+        ]);
     }
 
     public function solicitarCUIS()
