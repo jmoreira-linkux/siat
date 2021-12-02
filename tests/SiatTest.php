@@ -7,18 +7,29 @@ use \DateTime;
 
 class SiatTest extends TestCase
 {
+    private $siat;
+
+    protected function setUp(): void
+    {
+        $this->siat = new Siat('6D305EED6572A49A1D74437', '346141028');
+    }
+
+    public function testGenerarToken()
+    {
+        $user = $this->siat->generarToken('99999999', '');
+        $this->assertEquals(false, $user->UsuarioAutenticadoDto->ok);
+    }
+
     public function testSolicitarCUIS()
     {
-        $siat = new Siat('', 0);
-        $cuis = $siat->solicitarCUIS();
+        $cuis = $this->siat->solicitarCUIS();
         $this->assertEquals('', $cuis);
     }
 
     public function testSolicitarCUFD()
     {
-        $siat = new Siat('', 0);
-        $cuis = $siat->solicitarCUIS();
-        $cufd = $siat->solicitarCUFD($cuis);
+        $cuis = $this->siat->solicitarCUIS();
+        $cufd = $this->siat->solicitarCUFD($cuis);
         $this->assertEquals('', $cufd);
     }
 
