@@ -18,6 +18,8 @@ jobs:
       uses: shivammathur/setup-php@v2
       with:
         php-version: '7.4'
+        coverage: xdebug
+        ini-values: variables_order="EGPCS"
 
     - name: Validate composer.json and composer.lock
       run: composer validate --strict
@@ -38,6 +40,11 @@ jobs:
     # Docs: https://getcomposer.org/doc/articles/scripts.md
 
     - name: Run test suite
+      env:
+        CODIGO_SISTEMA: ${{ secrets.CODIGO_SISTEMA }}
+        NIT: ${{ secrets.NIT }}
+        USERNAME: ${{ secrets.USERNAME }}
+        PASSWORD: ${{ secrets.PASSWORD }}
       run: composer run-script test
 
     - name: Run code sniffer

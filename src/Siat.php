@@ -26,11 +26,12 @@ class Siat
     const TIPO_DOCUMENTO_SECTOR_FACTURA_COMPRA_VENTA = 1;
 
     const SIAT_WSDL = 'https://pilotosiatservicios.impuestos.gob.bo/v2/ServicioFacturacionComputarizada?wsdl';
-    const SIAT_AUTENTICACION_WSDL = 'https://pilotosiatservicios.impuestos.gob.bo/v1/ServicioAutenticacionSoap?wsdl';
+    const SIAT_CODIGOS_WSDL = 'https://pilotosiatservicios.impuestos.gob.bo/v1/FacturacionCodigos?wsdl';
 
     public function __construct(
         string $codigoSistema,
         int $nit,
+        string $token,
         int $codigoModalidad = 2,
         int $codigoAmbiente = 2,
         int $codigoSucursal = 0,
@@ -38,36 +39,41 @@ class Siat
     ) {
         $this->codigoSistema = $codigoSistema;
         $this->nit = $nit;
+        $this->token = $token;
         $this->codigoAmbiente = $codigoAmbiente;
         $this->codigoModalidad = $codigoModalidad;
         $this->codigoSucursal = $codigoSucursal;
         $this->codigoPuntoVenta = $codigoPuntoVenta;
-        // $this->client = new SoapClient(self::SIAT_WSDL);
     }
 
-    private function getAuthClient()
+    private function getCodigosClient()
     {
-        if (!isset($this->authClient)) {
-            $this->authClient = new SoapClient(self::SIAT_AUTENTICACION_WSDL);
+        if (!isset($this->codigosClient)) {
+            $opts = [
+                'http' => [
+                    'header' => 'Authorization: Token ' . $this->token
+                ]
+            ];
+            $context = stream_context_create($opts);
+            $this->codigosClient = new SoapClient(self::SIAT_CODIGOS_WSDL, ['stream_context' => $context]);
         }
-        return $this->authClient;
-    }
-
-    public function generarToken($username, $password)
-    {
-        $client = $this->getAuthClient();
-        return $client->token([
-            'DatosUsuarioRequest' => [
-                'nit' => $this->nit,
-                'login' => $username,
-                'password' => $password,
-            ]
-        ]);
+        return $this->codigosClient;
     }
 
     public function solicitarCUIS()
     {
-        return '';
+        $client = $this->getCodigosClient();
+        $response = $client->solicitudCuis([
+            'SolicitudOperacionesCuis' => [
+                'codigoAmbiente' => $this->codigoAmbiente,
+                'codigoSistema' => $this->codigoSistema,
+                'nit' => $this->nit,
+                'codigoModalidad' => $this->codigoModalidad,
+                'codigoSucursal' => $this->codigoSucursal,
+                'codigoPuntoVenta' => $this->codigoPuntoVenta,
+            ],
+        ]);
+        return $response->RespuestaCuis;
     }
 
     public function solicitarCUFD(string $cuis)
