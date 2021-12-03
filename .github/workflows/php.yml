@@ -38,6 +38,11 @@ jobs:
     # Docs: https://getcomposer.org/doc/articles/scripts.md
 
     - name: Run test suite
+      env:
+        CODIGO_SISTEMA: ${{ secrets.CODIGO_SISTEMA }}
+        NIT: ${{ secrets.NIT }}
+        USERNAME: ${{ secrets.USERNAME }}
+        PASSWORD: ${{ secrets.PASSWORD }}
       run: composer run-script test
 
     - name: Run code sniffer
