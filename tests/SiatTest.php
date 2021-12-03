@@ -2,41 +2,40 @@
 
 namespace Enors\Siat;
 
+use Dotenv\Dotenv;
 use PHPUnit\Framework\TestCase;
-use \DateTime;
 
 class SiatTest extends TestCase
 {
-    private $siat;
+    private static $siat;
 
-    protected function setUp(): void
+    public static function setUpBeforeClass(): void
     {
-        $this->siat = new Siat('6D305EED6572A49A1D74437', '346141028');
-    }
-
-    public function testGenerarToken()
-    {
-        $user = $this->siat->generarToken('99999999', '');
-        $this->assertEquals(false, $user->UsuarioAutenticadoDto->ok);
+        $credentials = new \stdClass;
+        $credentials->username = $_ENV['USERNAME'];
+        $credentials->password = $_ENV['PASSWORD'];
+        $auth = new Auth($_ENV['NIT'], $credentials);
+        $accessToken = $auth->getAccessToken();
+        self::$siat = new Siat($_ENV['CODIGO_SISTEMA'], $_ENV['NIT'], $accessToken);
     }
 
     public function testSolicitarCUIS()
     {
-        $cuis = $this->siat->solicitarCUIS();
-        $this->assertEquals('', $cuis);
+        $cuis = self::$siat->solicitarCUIS();
+        $this->assertNotEmpty($cuis->codigo);
+        $this->assertNotEmpty($cuis->fechaVigencia);
     }
 
     public function testSolicitarCUFD()
     {
-        $cuis = $this->siat->solicitarCUIS();
-        $cufd = $this->siat->solicitarCUFD($cuis);
+        $cufd = self::$siat->solicitarCUFD('');
         $this->assertEquals('', $cufd);
     }
 
     public function testGenerarCUF()
     {
         $nit = 123456789;
-        $siat = new Siat('', $nit, Siat::MODALIDAD_ELECTRONICA_EN_LINEA);
+        $siat = new Siat('', $nit, '', Siat::MODALIDAD_ELECTRONICA_EN_LINEA);
         $timestamp = strtotime('2019-01-13 16:37:21');
         $nroFactura = 1;
         $cufd = 'A19E23EF34124CD';
