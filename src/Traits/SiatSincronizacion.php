@@ -35,4 +35,20 @@ trait SiatSincronizacion
         ]);
         return $response->RespuestaListaParametricas->listaCodigos;
     }
+
+    public function sincronizarParametricaUnidadMedida($cuis)
+    {
+        $client = $this->getSincronizacionClient();
+        $response = $client->sincronizarParametricaUnidadMedida([
+            'SolicitudSincronizacion' => [
+                'codigoAmbiente' => $this->codigoAmbiente,
+                'codigoSistema' => $this->codigoSistema,
+                'nit' => $this->nit,
+                'cuis' => $cuis,
+                'codigoSucursal' => $this->codigoSucursal,
+                'codigoPuntoVenta' => $this->codigoPuntoVenta,
+            ],
+        ]);
+        return $response->RespuestaListaParametricas->listaCodigos;
+    }
 }
