@@ -2,6 +2,7 @@
 
 namespace Enors\Siat;
 
+use Enors\Siat\Traits\SiatSincronizacion;
 use Enors\Siat\Utils\Base16;
 use Enors\Siat\Utils\Module11;
 
@@ -9,6 +10,8 @@ use \SoapClient;
 
 class Siat
 {
+    use SiatSincronizacion;
+
     const AMBIENTE_PRODUCCION = 1;
     const AMBIENTE_PRUEBA_PILOTO = 2;
 
@@ -27,6 +30,7 @@ class Siat
 
     const SIAT_WSDL = 'https://pilotosiatservicios.impuestos.gob.bo/v2/ServicioFacturacionComputarizada?wsdl';
     const SIAT_CODIGOS_WSDL = 'https://pilotosiatservicios.impuestos.gob.bo/v1/FacturacionCodigos?wsdl';
+    const SIAT_SINCRONIZACION_WSDL = 'https://pilotosiatservicios.impuestos.gob.bo/v1/FacturacionSincronizacion?wsdl';
 
     public function __construct(
         string $codigoSistema,
