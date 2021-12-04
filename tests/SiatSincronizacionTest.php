@@ -21,6 +21,13 @@ class SiatSincronizacionTest extends TestCase
         self::$cuis = self::$siat->solicitarCUIS()->codigo;
     }
 
+    public function testSincronizarFechaHora()
+    {
+        $fechaHora = self::$siat->sincronizarFechaHora(self::$cuis);
+        $this->assertIsString($fechaHora);
+        $this->assertNotEmpty($fechaHora);
+    }
+
     public function testSincronizarParametricaPaisOrigen()
     {
         $response = self::$siat->sincronizarParametricaPaisOrigen(self::$cuis);
