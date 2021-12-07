@@ -24,7 +24,6 @@ class Auth
                 'password' => $this->credentials->password,
             ],
         ]);
-
         if ($response->UsuarioAutenticadoDto->ok) {
             return $response->UsuarioAutenticadoDto->token;
         }
