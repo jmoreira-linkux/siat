@@ -22,8 +22,13 @@ class AuthTest extends TestCase
     {
         $nit = $_ENV['SIAT_NIT'];
         $credentials = new \stdClass;
+<<<<<<< HEAD
         $credentials->username = $_ENV['SIAT_USER'];
         $credentials->password = $_ENV['SIAT_PASSWORD'];
+=======
+        $credentials->username = $_ENV['USER'];
+        $credentials->password = $_ENV['PASSWORD'];
+>>>>>>> 93a4328 (resolve #13 solicitud cufd)
         $auth = new Auth($nit, $credentials);
         $token = $auth->getAccessToken();
         $this->assertNotEmpty($token);

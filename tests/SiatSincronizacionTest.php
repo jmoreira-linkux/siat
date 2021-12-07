@@ -13,9 +13,15 @@ class SiatSincronizacionTest extends TestCase
     public static function setUpBeforeClass(): void
     {
         $credentials = new \stdClass;
+<<<<<<< HEAD
         $credentials->username = $_ENV['SIAT_USER'];
         $credentials->password = $_ENV['SIAT_PASSWORD'];
         $auth = new Auth($_ENV['SIAT_NIT'], $credentials);
+=======
+        $credentials->username = $_ENV['USER'];
+        $credentials->password = $_ENV['PASSWORD'];
+        $auth = new Auth($_ENV['NIT'], $credentials);
+>>>>>>> 93a4328 (resolve #13 solicitud cufd)
         $accessToken = $auth->getAccessToken();
         self::$siat = new Siat($_ENV['SIAT_CODIGO_SISTEMA'], $_ENV['SIAT_NIT'], $accessToken);
         self::$cuis = self::$siat->solicitarCUIS()->codigo;
