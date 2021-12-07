@@ -43,7 +43,7 @@ jobs:
       env:
         CODIGO_SISTEMA: ${{ secrets.CODIGO_SISTEMA }}
         NIT: ${{ secrets.NIT }}
-        USERNAME: ${{ secrets.USERNAME }}
+        USER: ${{ secrets.USER }}
         PASSWORD: ${{ secrets.PASSWORD }}
       run: composer run-script test
 

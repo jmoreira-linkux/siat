@@ -22,7 +22,7 @@ class AuthTest extends TestCase
     {
         $nit = $_ENV['NIT'];
         $credentials = new \stdClass;
-        $credentials->username = $_ENV['USERNAME'];
+        $credentials->username = $_ENV['USER'];
         $credentials->password = $_ENV['PASSWORD'];
         $auth = new Auth($nit, $credentials);
         $token = $auth->getAccessToken();

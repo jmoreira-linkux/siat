@@ -82,7 +82,19 @@ class Siat
 
     public function solicitarCUFD(string $cuis)
     {
-        return '';
+        $client = $this->getCodigosClient();
+        $response = $client->solicitudCufd([
+            'SolicitudOperaciones'=>[
+            'codigoAmbiente' => $this->codigoAmbiente,
+            'codigoSistema' => $this->codigoSistema,
+            'nit' => $this->nit,
+            'codigoModalidad' => $this->codigoModalidad,
+            'cuis' => $cuis,
+            'codigoSucursal' => $this->codigoSucursal,
+            'codigoPuntoVenta' => $this->codigoPuntoVenta,
+            ]
+        ]);
+        return $response->RespuestaCufd;
     }
 
     public function generarCUF(

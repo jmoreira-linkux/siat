@@ -13,7 +13,7 @@ class SiatSincronizacionTest extends TestCase
     public static function setUpBeforeClass(): void
     {
         $credentials = new \stdClass;
-        $credentials->username = $_ENV['USERNAME'];
+        $credentials->username = $_ENV['USER'];
         $credentials->password = $_ENV['PASSWORD'];
         $auth = new Auth($_ENV['NIT'], $credentials);
         $accessToken = $auth->getAccessToken();
