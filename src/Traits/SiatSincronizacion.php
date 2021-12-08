@@ -187,4 +187,29 @@ trait SiatSincronizacion
         ]);
         return $response->RespuestaListaParametricas->listaCodigos;
     }
+
+    /**
+     * Método por el cual el Sistema Informático de Facturación autorizado realiza la sincronización
+     * del catálogo de métodos de pago que se incluyen en las Facturas correspondientes.
+     *
+     * @param string $cuis
+     * @return array<mixed> stdClass([codigoClasificador] => int, [descripcion] => string)
+     */
+
+    public function sincronizarParametricaTipoMetodoPago($cuis)
+    {
+        $client = $this->getSincronizacionClient();
+        $response = $client->sincronizarParametricaTipoMetodoPago([
+            'SolicitudSincronizacion' => [
+                'codigoAmbiente' => $this->codigoAmbiente,
+                'codigoSistema' => $this->codigoSistema,
+                'nit' => $this->nit,
+                'cuis' => $cuis,
+                'codigoSucursal' => $this->codigoSucursal,
+                'codigoPuntoVenta' => $this->codigoPuntoVenta,
+            ],
+        ]);
+        var_dump($response);
+        return $response->RespuestaListaParametricas->listaCodigos;
+    }
 }
