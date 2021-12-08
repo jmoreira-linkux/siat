@@ -52,9 +52,17 @@ class SiatSincronizacionTest extends TestCase
         $this->assertIsString($response[0]->descripcionLeyenda);
     }
 
-    public function testsincronizarParametricaEventosSignificativos()
+    public function testSincronizarParametricaEventosSignificativos()
     {
         $response = self::$siat->sincronizarParametricaEventosSignificativos(self::$cuis);
+        $this->assertGreaterThan(0, count($response));
+        $this->assertIsInt($response[0]->codigoClasificador);
+        $this->assertIsString($response[0]->descripcion);
+    }
+
+    public function testSincronizarParametricaMotivoAnulacion()
+    {
+        $response = self::$siat->sincronizarParametricaMotivoAnulacion(self::$cuis);
         $this->assertGreaterThan(0, count($response));
         $this->assertIsInt($response[0]->codigoClasificador);
         $this->assertIsString($response[0]->descripcion);
