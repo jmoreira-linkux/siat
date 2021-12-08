@@ -48,5 +48,7 @@ class SiatSincronizacionTest extends TestCase
     {
         $response = self::$siat->sincronizarListaLeyendasFactura(self::$cuis);
         $this->assertGreaterThan(0, count($response));
+        $this->assertIsString($response[0]->codigoActividad);
+        $this->assertIsString($response[0]->descripcionLeyenda);
     }
 }
