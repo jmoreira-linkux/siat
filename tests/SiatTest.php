@@ -12,7 +12,6 @@ class SiatTest extends TestCase
     private static $accessToken;
     private static $cuis;
 
-
     public static function setUpBeforeClass(): void
     {
         $credentials = new \stdClass;
@@ -26,7 +25,6 @@ class SiatTest extends TestCase
 
     public function testSolicitarCUIS()
     {
-        var_dump(self::$accessToken);
         $siat = new Siat($_ENV['CODIGO_SISTEMA'], $_ENV['NIT'], self::$accessToken);
         $cuis = $siat->solicitarCUIS();
         $this->assertNotEmpty($cuis->codigo);
