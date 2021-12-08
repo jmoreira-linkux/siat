@@ -291,4 +291,26 @@ trait SiatSincronizacion
         ]);
         return $response->RespuestaListaParametricas->listaCodigos;
     }
+
+    /**
+     *
+     * @param string $cuis
+     * @return array<mixed> stdClass([codigoActividad] => string, [codigoProducto] => int, [descripcionProducto] => string)
+     */
+
+    public function sincronizarParametricaTipoPuntoVenta($cuis)
+    {
+        $client = $this->getSincronizacionClient();
+        $response = $client->sincronizarParametricaTipoPuntoVenta([
+            'SolicitudSincronizacion' => [
+                'codigoAmbiente' => $this->codigoAmbiente,
+                'codigoSistema' => $this->codigoSistema,
+                'nit' => $this->nit,
+                'cuis' => $cuis,
+                'codigoSucursal' => $this->codigoSucursal,
+                'codigoPuntoVenta' => $this->codigoPuntoVenta,
+            ],
+        ]);
+        return $response->RespuestaListaParametricas->listaCodigos;
+    }
 }
