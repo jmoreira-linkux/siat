@@ -21,7 +21,7 @@ class SiatSincronizacionTest extends TestCase
         self::$cuis = self::$siat->solicitarCUIS()->codigo;
     }
 
-    public function testSincronizarFechaHora()
+    /*public function testSincronizarFechaHora()
     {
         $fechaHora = self::$siat->sincronizarFechaHora(self::$cuis);
         $this->assertIsString($fechaHora);
@@ -90,5 +90,14 @@ class SiatSincronizacionTest extends TestCase
         $this->assertGreaterThan(0, count($response));
         $this->assertIsInt($response[0]->codigoClasificador);
         $this->assertIsString($response[0]->descripcion);
+    }
+    */
+    public function testSincronizarParametricaListaProductosServicios()
+    {
+        $response = self::$siat->sincronizarParametricaListaProductosServicios(self::$cuis);
+        $this->assertGreaterThan(0, count($response));
+        $this->assertIsString($response[0]->codigoActividad);
+        $this->assertIsInt($response[0]->codigoProducto);
+        $this->assertIsString($response[0]->descripcionProducto);
     }
 }
