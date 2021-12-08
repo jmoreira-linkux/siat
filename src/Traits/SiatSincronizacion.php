@@ -163,4 +163,28 @@ trait SiatSincronizacion
         ]);
         return $response->RespuestaListaParametricas->listaCodigos;
     }
+
+    /**
+     * Método por el cual el Sistema Informático de Facturación autorizado realiza la sincronización
+     * del catálogo de documentos identidad que deben incluirse en las Facturas correspondientes.
+     *
+     * @param string $cuis
+     * @return array<mixed> stdClass([codigoClasificador] => int, [descripcion] => string)
+     */
+
+    public function sincronizarParametricaTipoDocumentoIdentidad($cuis)
+    {
+        $client = $this->getSincronizacionClient();
+        $response = $client->sincronizarParametricaTipoDocumentoIdentidad([
+            'SolicitudSincronizacion' => [
+                'codigoAmbiente' => $this->codigoAmbiente,
+                'codigoSistema' => $this->codigoSistema,
+                'nit' => $this->nit,
+                'cuis' => $cuis,
+                'codigoSucursal' => $this->codigoSucursal,
+                'codigoPuntoVenta' => $this->codigoPuntoVenta,
+            ],
+        ]);
+        return $response->RespuestaListaParametricas->listaCodigos;
+    }
 }

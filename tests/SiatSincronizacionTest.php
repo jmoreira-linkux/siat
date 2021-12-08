@@ -67,4 +67,12 @@ class SiatSincronizacionTest extends TestCase
         $this->assertIsInt($response[0]->codigoClasificador);
         $this->assertIsString($response[0]->descripcion);
     }
+
+    public function testSincronizarParametricaTipoDocumentoIdentidad()
+    {
+        $response = self::$siat->sincronizarParametricaTipoDocumentoIdentidad(self::$cuis);
+        $this->assertGreaterThan(0, count($response));
+        $this->assertIsInt($response[0]->codigoClasificador);
+        $this->assertIsString($response[0]->descripcion);
+    }
 }
