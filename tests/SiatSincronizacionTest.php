@@ -100,4 +100,12 @@ class SiatSincronizacionTest extends TestCase
         $this->assertIsInt($response[0]->codigoProducto);
         $this->assertIsString($response[0]->descripcionProducto);
     }
+
+    public function testSincronizarParametricaTipoHabitacion()
+    {
+        $response = self::$siat->sincronizarParametricaTipoHabitacion(self::$cuis);
+        $this->assertGreaterThan(0, count($response));
+        $this->assertIsInt($response[0]->codigoClasificador);
+        $this->assertIsString($response[0]->descripcion);
+    }
 }

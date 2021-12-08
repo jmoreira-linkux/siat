@@ -263,4 +263,32 @@ trait SiatSincronizacion
         ]);
         return $response->RespuestaListaProductos->listaCodigos;
     }
+
+    /**
+     * Conforme a normativa vigente, la sincronización de catálogos de productos y servicios
+     * debe realizarse a través de los Servicios Web disponibles para tal efecto.
+     * Este proceso, permite la descarga del catálogo utilizado en el Servicio de
+     * Impuestos Nacionales en función a la actividad económica, de tal manera que, con el
+     * universo de códigos proporcionados al Sujeto Pasivo, este pueda homologar sus productos
+     * con los de la Administración Tributaria.
+     *
+     * @param string $cuis
+     * @return array<mixed> stdClass([codigoActividad] => string, [codigoProducto] => int, [descripcionProducto] => string)
+     */
+
+    public function sincronizarParametricaTipoHabitacion($cuis)
+    {
+        $client = $this->getSincronizacionClient();
+        $response = $client->sincronizarParametricaTipoHabitacion([
+            'SolicitudSincronizacion' => [
+                'codigoAmbiente' => $this->codigoAmbiente,
+                'codigoSistema' => $this->codigoSistema,
+                'nit' => $this->nit,
+                'cuis' => $cuis,
+                'codigoSucursal' => $this->codigoSucursal,
+                'codigoPuntoVenta' => $this->codigoPuntoVenta,
+            ],
+        ]);
+        return $response->RespuestaListaParametricas->listaCodigos;
+    }
 }
