@@ -90,11 +90,12 @@ trait SiatSincronizacion
     }
 
     /**
-     * Método por el cual el Sistema Informático de Facturación autorizado realiza la sincronización del catálogo de
-     * leyendas de facturas
+     * Método por el cual el Sistema Informático de Facturación autorizado realiza la
+     * sincronización del catálogo de leyendas que deben incluirse en las Facturas de
+     * manera aleatoria de acuerdo a su actividad económica.
      *
      * @param string $cuis
-     * @return array<mixed> stdClass([codigoClasificador] => int, [descripcion] => string)
+     * @return array<mixed> stdClass([codigoActividad] => string, [descripcionLeyenda] => string)
      */
 
     public function sincronizarListaLeyendasFactura($cuis)
@@ -114,8 +115,9 @@ trait SiatSincronizacion
     }
 
     /**
-     * Método por el cual el Sistema Informático de Facturación autorizado realiza la sincronización del catálogo de
-     * leyendas de facturas
+     * Método por el cual el Sistema Informático de Facturación autorizado realiza la
+     * sincronización del catálogo de eventos significativos para el registro de eventos
+     * que ocurren en el Sistema Informático de Facturación.
      *
      * @param string $cuis
      * @return array<mixed> stdClass([codigoClasificador] => int, [descripcion] => string)
@@ -125,6 +127,31 @@ trait SiatSincronizacion
     {
         $client = $this->getSincronizacionClient();
         $response = $client->sincronizarParametricaEventosSignificativos([
+            'SolicitudSincronizacion' => [
+                'codigoAmbiente' => $this->codigoAmbiente,
+                'codigoSistema' => $this->codigoSistema,
+                'nit' => $this->nit,
+                'cuis' => $cuis,
+                'codigoSucursal' => $this->codigoSucursal,
+                'codigoPuntoVenta' => $this->codigoPuntoVenta,
+            ],
+        ]);
+        return $response->RespuestaListaParametricas->listaCodigos;
+    }
+
+    /**
+     * Método por el cual el Sistema Informático de Facturación autorizado realiza la
+     * sincronización del catálogo de motivos de anulación que deben incluirse en la
+     * solicitud de anulación de las Facturas.
+     *
+     * @param string $cuis
+     * @return array<mixed> stdClass([codigoClasificador] => int, [descripcion] => string)
+     */
+
+    public function sincronizarParametricaMotivoAnulacion($cuis)
+    {
+        $client = $this->getSincronizacionClient();
+        $response = $client->sincronizarParametricaMotivoAnulacion([
             'SolicitudSincronizacion' => [
                 'codigoAmbiente' => $this->codigoAmbiente,
                 'codigoSistema' => $this->codigoSistema,
