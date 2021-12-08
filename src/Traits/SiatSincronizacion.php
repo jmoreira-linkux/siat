@@ -209,7 +209,30 @@ trait SiatSincronizacion
                 'codigoPuntoVenta' => $this->codigoPuntoVenta,
             ],
         ]);
-        var_dump($response);
+        return $response->RespuestaListaParametricas->listaCodigos;
+    }
+
+    /**
+     * Método por el cual el Sistema Informático de Facturación autorizado realiza la
+     * sincronización del catálogo de monedas que deben incluirse en las Facturas correspondientes.
+     *
+     * @param string $cuis
+     * @return array<mixed> stdClass([codigoClasificador] => int, [descripcion] => string)
+     */
+
+    public function sincronizarParametricaTipoMoneda($cuis)
+    {
+        $client = $this->getSincronizacionClient();
+        $response = $client->sincronizarParametricaTipoMoneda([
+            'SolicitudSincronizacion' => [
+                'codigoAmbiente' => $this->codigoAmbiente,
+                'codigoSistema' => $this->codigoSistema,
+                'nit' => $this->nit,
+                'cuis' => $cuis,
+                'codigoSucursal' => $this->codigoSucursal,
+                'codigoPuntoVenta' => $this->codigoPuntoVenta,
+            ],
+        ]);
         return $response->RespuestaListaParametricas->listaCodigos;
     }
 }
