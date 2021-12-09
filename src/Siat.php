@@ -3,6 +3,7 @@
 namespace Enors\Siat;
 
 use Enors\Siat\Traits\SiatSincronizacion;
+use Enors\Siat\Traits\SiatOperaciones;
 use Enors\Siat\Utils\Base16;
 use Enors\Siat\Utils\Module11;
 
@@ -11,6 +12,7 @@ use \SoapClient;
 class Siat
 {
     use SiatSincronizacion;
+    use SiatOperaciones;
 
     const AMBIENTE_PRODUCCION = 1;
     const AMBIENTE_PRUEBA_PILOTO = 2;
@@ -31,6 +33,7 @@ class Siat
     const SIAT_WSDL = 'https://pilotosiatservicios.impuestos.gob.bo/v2/ServicioFacturacionComputarizada?wsdl';
     const SIAT_CODIGOS_WSDL = 'https://pilotosiatservicios.impuestos.gob.bo/v1/FacturacionCodigos?wsdl';
     const SIAT_SINCRONIZACION_WSDL = 'https://pilotosiatservicios.impuestos.gob.bo/v1/FacturacionSincronizacion?wsdl';
+    const SIAT_OPERACIONES_WSDL = 'https://pilotosiatservicios.impuestos.gob.bo/v1/FacturacionOperaciones?wsdl';
 
     public function __construct(
         string $codigoSistema,
@@ -39,7 +42,8 @@ class Siat
         int $codigoModalidad = 2,
         int $codigoAmbiente = 2,
         int $codigoSucursal = 0,
-        int $codigoPuntoVenta = 0
+        int $codigoPuntoVenta = 0,
+        int $codigoEvento = 2
     ) {
         $this->codigoSistema = $codigoSistema;
         $this->nit = $nit;
@@ -48,6 +52,7 @@ class Siat
         $this->codigoModalidad = $codigoModalidad;
         $this->codigoSucursal = $codigoSucursal;
         $this->codigoPuntoVenta = $codigoPuntoVenta;
+        $this->codigoEvento = $codigoEvento;
     }
 
     private function getCodigosClient()

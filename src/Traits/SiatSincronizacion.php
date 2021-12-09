@@ -245,7 +245,8 @@ trait SiatSincronizacion
      * con los de la Administración Tributaria.
      *
      * @param string $cuis
-     * @return array<mixed> stdClass([codigoActividad] => string, [codigoProducto] => int, [descripcionProducto] => string)
+     * @return array<mixed> stdClass([codigoActividad] => string,
+     * [codigoProducto] => int, [descripcionProducto] => string)
      */
 
     public function sincronizarParametricaListaProductosServicios($cuis)
@@ -273,7 +274,8 @@ trait SiatSincronizacion
      * con los de la Administración Tributaria.
      *
      * @param string $cuis
-     * @return array<mixed> stdClass([codigoActividad] => string, [codigoProducto] => int, [descripcionProducto] => string)
+     * @return array<mixed> stdClass([codigoActividad] => string,
+     * [codigoProducto] => int, [descripcionProducto] => string)
      */
 
     public function sincronizarParametricaTipoHabitacion($cuis)
@@ -295,7 +297,8 @@ trait SiatSincronizacion
     /**
      *
      * @param string $cuis
-     * @return array<mixed> stdClass([codigoActividad] => string, [codigoProducto] => int, [descripcionProducto] => string)
+     * @return array<mixed> stdClass([codigoActividad] => string,
+     * [codigoProducto] => int, [descripcionProducto] => string)
      */
 
     public function sincronizarParametricaTipoPuntoVenta($cuis)
