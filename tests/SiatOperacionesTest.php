@@ -20,11 +20,11 @@ class SiatOperacionesTest extends TestCase
         $accessToken = $auth->getAccessToken();
         self::$siat = new Siat($_ENV['CODIGO_SISTEMA'], $_ENV['NIT'], $accessToken);
         self::$cuis = self::$siat->solicitarCUIS()->codigo;
-        self::$cufd = self::$siat->solicitarCUFD(self::$cuis)->codigo;
     }
 
-    public function testRegistroEventoSignificativo()
+    /*public function testRegistroEventoSignificativo()
     {
+        self::$cufd = self::$siat->solicitarCUFD(self::$cuis)->codigo;
         date_default_timezone_set('America/La_Paz');
         $response = self::$siat->registroEventoSignificativo(
             self::$cuis,
@@ -45,5 +45,15 @@ class SiatOperacionesTest extends TestCase
         );
         $this->assertIsBool($response->transaccion);
         $this->assertIsInt($response->codigoRecepcionEventoSignificativo);
+    }*/
+
+    public function testRegistroPuntoVenta()
+    {
+        date_default_timezone_set('America/La_Paz');
+        $response = self::$siat->registroPuntoVenta(
+            self::$cuis, "descripción", "nombrePuntoVenta1"
+        );
+        $this->assertIsBool($response->transaccion);
+        $this->assertIsInt($response->codigoPuntoVenta);
     }
 }

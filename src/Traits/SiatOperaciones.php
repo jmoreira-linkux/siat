@@ -16,7 +16,6 @@ trait SiatOperaciones
             $this->operacionesClient = new \SoapClient(self::SIAT_OPERACIONES_WSDL, [
                 'stream_context' => $context
             ]);
-            var_dump($this->operacionesClient);
         }
         return $this->operacionesClient;
     }
@@ -42,4 +41,24 @@ trait SiatOperaciones
         ]);
         return $response->RespuestaListaEventos;
     }
+
+    public function registroPuntoVenta($cuis, $descripcion, $nombrePuntoVenta)
+    {
+        $client = $this->getOperacionesClient();
+        $response = $client->registroPuntoVenta([
+            'SolicitudRegistroPuntoVenta' => [
+                'codigoAmbiente' => $this->codigoAmbiente,
+                'codigoModalidad' => $this->codigoModalidad,
+                'codigoSistema' => $this->codigoSistema,
+                'codigoSucursal' => $this->codigoSucursal,
+                'codigoTipoPuntoVenta' => 2,
+                'cuis' => $cuis,
+                'descripcion' => $descripcion,
+                'nit' => $this->nit,
+                'nombrePuntoVenta' => $nombrePuntoVenta
+            ],
+        ]);
+        return $response->RespuestaRegistroPuntoVenta;
+    }
+
 }

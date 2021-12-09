@@ -43,7 +43,7 @@ class Siat
         int $codigoAmbiente = 2,
         int $codigoSucursal = 0,
         int $codigoPuntoVenta = 0,
-        int $codigoEvento = 2
+        int $codigoEvento = 0
     ) {
         $this->codigoSistema = $codigoSistema;
         $this->nit = $nit;
