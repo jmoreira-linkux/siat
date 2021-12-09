@@ -20,7 +20,7 @@ trait SiatOperaciones
         return $this->operacionesClient;
     }
 
-    public function registroEventoSignificativo($cuis, $cufd, $descripcion, $fechaInicioEvento, $fechaFinEvento)
+    public function registroEventoSignificativo($cuis, $cufd, $descripcion, $fechaInicioEvento, $fechaFinEvento, $codigoEvento)
     {
         $client = $this->getOperacionesClient();
         $response = $client->registroEventoSignificativo([
@@ -32,7 +32,7 @@ trait SiatOperaciones
                 'cufd' => $cufd,
                 'codigoSucursal' => $this->codigoSucursal,
                 'codigoPuntoVenta' => $this->codigoPuntoVenta,
-                'codigoMotivoEvento' => $this->codigoEvento,
+                'codigoMotivoEvento' => $codigoEvento,
                 'descripcion' => $descripcion,
                 'fechaHoraInicioEvento' => $fechaInicioEvento,
                 'fechaHoraFinEvento' => $fechaFinEvento,
@@ -42,7 +42,7 @@ trait SiatOperaciones
         return $response->RespuestaListaEventos;
     }
 
-    public function registroPuntoVenta($cuis, $descripcion, $nombrePuntoVenta)
+    public function registroPuntoVenta($cuis, $descripcion, $nombrePuntoVenta, $codigoTipoPuntoVenta)
     {
         $client = $this->getOperacionesClient();
         $response = $client->registroPuntoVenta([
@@ -51,7 +51,7 @@ trait SiatOperaciones
                 'codigoModalidad' => $this->codigoModalidad,
                 'codigoSistema' => $this->codigoSistema,
                 'codigoSucursal' => $this->codigoSucursal,
-                'codigoTipoPuntoVenta' => 2,
+                'codigoTipoPuntoVenta' => $codigoTipoPuntoVenta,
                 'cuis' => $cuis,
                 'descripcion' => $descripcion,
                 'nit' => $this->nit,

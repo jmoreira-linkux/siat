@@ -42,8 +42,7 @@ class Siat
         int $codigoModalidad = 2,
         int $codigoAmbiente = 2,
         int $codigoSucursal = 0,
-        int $codigoPuntoVenta = 0,
-        int $codigoEvento = 0
+        int $codigoPuntoVenta = 0
     ) {
         $this->codigoSistema = $codigoSistema;
         $this->nit = $nit;
@@ -52,7 +51,6 @@ class Siat
         $this->codigoModalidad = $codigoModalidad;
         $this->codigoSucursal = $codigoSucursal;
         $this->codigoPuntoVenta = $codigoPuntoVenta;
-        $this->codigoEvento = $codigoEvento;
     }
 
     private function getCodigosClient()
