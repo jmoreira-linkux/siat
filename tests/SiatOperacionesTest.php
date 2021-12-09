@@ -41,9 +41,23 @@ class SiatOperacionesTest extends TestCase
                         date("Y-m-d\TH:i:s.v")
                     )
                 )
-            )
+            ),
+            0
         );
         $this->assertIsBool($response->transaccion);
         $this->assertIsInt($response->codigoRecepcionEventoSignificativo);
+    }
+
+    public function testRegistroPuntoVenta()
+    {
+        date_default_timezone_set('America/La_Paz');
+        $response = self::$siat->registroPuntoVenta(
+            self::$cuis,
+            "descripción",
+            "nombrePuntoVenta1",
+            2
+        );
+        $this->assertIsBool($response->transaccion);
+        $this->assertIsInt($response->codigoPuntoVenta);
     }
 }

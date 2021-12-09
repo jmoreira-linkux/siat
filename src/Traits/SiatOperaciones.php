@@ -16,12 +16,11 @@ trait SiatOperaciones
             $this->operacionesClient = new \SoapClient(self::SIAT_OPERACIONES_WSDL, [
                 'stream_context' => $context
             ]);
-            var_dump($this->operacionesClient);
         }
         return $this->operacionesClient;
     }
 
-    public function registroEventoSignificativo($cuis, $cufd, $descripcion, $fechaInicioEvento, $fechaFinEvento)
+    public function registroEventoSignificativo($cuis, $cufd, $descripcion, $fechaInicioEvento, $fechaFinEvento, $codigoEvento)
     {
         $client = $this->getOperacionesClient();
         $response = $client->registroEventoSignificativo([
@@ -33,7 +32,7 @@ trait SiatOperaciones
                 'cufd' => $cufd,
                 'codigoSucursal' => $this->codigoSucursal,
                 'codigoPuntoVenta' => $this->codigoPuntoVenta,
-                'codigoMotivoEvento' => $this->codigoEvento,
+                'codigoMotivoEvento' => $codigoEvento,
                 'descripcion' => $descripcion,
                 'fechaHoraInicioEvento' => $fechaInicioEvento,
                 'fechaHoraFinEvento' => $fechaFinEvento,
@@ -41,5 +40,24 @@ trait SiatOperaciones
             ],
         ]);
         return $response->RespuestaListaEventos;
+    }
+
+    public function registroPuntoVenta($cuis, $descripcion, $nombrePuntoVenta, $codigoTipoPuntoVenta)
+    {
+        $client = $this->getOperacionesClient();
+        $response = $client->registroPuntoVenta([
+            'SolicitudRegistroPuntoVenta' => [
+                'codigoAmbiente' => $this->codigoAmbiente,
+                'codigoModalidad' => $this->codigoModalidad,
+                'codigoSistema' => $this->codigoSistema,
+                'codigoSucursal' => $this->codigoSucursal,
+                'codigoTipoPuntoVenta' => $codigoTipoPuntoVenta,
+                'cuis' => $cuis,
+                'descripcion' => $descripcion,
+                'nit' => $this->nit,
+                'nombrePuntoVenta' => $nombrePuntoVenta
+            ],
+        ]);
+        return $response->RespuestaRegistroPuntoVenta;
     }
 }
