@@ -23,7 +23,6 @@ trait SiatOperaciones
 
     public function registroEventoSignificativo($cuis, $cufd, $descripcion, $fechaInicioEvento, $fechaFinEvento)
     {
-        var_dump('fecha inicio: '.$fechaInicioEvento. ' fecha fin: '.$fechaFinEvento);
         $client = $this->getOperacionesClient();
         $response = $client->registroEventoSignificativo([
             'SolicitudEventoSignificativo' => [
@@ -35,13 +34,12 @@ trait SiatOperaciones
                 'codigoSucursal' => $this->codigoSucursal,
                 'codigoPuntoVenta' => $this->codigoPuntoVenta,
                 'codigoMotivoEvento' => $this->codigoEvento,
-                'descripcion' => $this->codigoEvento,
+                'descripcion' => $descripcion,
                 'fechaHoraInicioEvento' => $fechaInicioEvento,
                 'fechaHoraFinEvento' => $fechaFinEvento,
                 'cufdEvento' => $cufd
             ],
         ]);
-        var_dump($response);
         return $response->RespuestaListaEventos;
     }
 }
