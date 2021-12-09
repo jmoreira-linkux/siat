@@ -60,5 +60,4 @@ trait SiatOperaciones
         ]);
         return $response->RespuestaRegistroPuntoVenta;
     }
-
 }
