@@ -41,10 +41,10 @@ jobs:
 
     - name: Run test suite
       env:
-        CODIGO_SISTEMA: ${{ secrets.SIAT_CODIGO_SISTEMA }}
-        NIT: ${{ secrets.SIAT_NIT }}
-        USER: ${{ secrets.SIAT_USER }}
-        PASSWORD: ${{ secrets.SIAT_PASSWORD }}
+        SIAT_CODIGO_SISTEMA: ${{ secrets.SIAT_CODIGO_SISTEMA }}
+        SIAT_NIT: ${{ secrets.SIAT_NIT }}
+        SIAT_USER: ${{ secrets.SIAT_USER }}
+        SIAT_PASSWORD: ${{ secrets.SIAT_PASSWORD }}
       run: composer run-script test
 
     - name: Run code sniffer
