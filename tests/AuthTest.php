@@ -20,10 +20,10 @@ class AuthTest extends TestCase
 
     public function testGetAccessTokenSuccessful()
     {
-        $nit = $_ENV['NIT'];
+        $nit = $_ENV['SIAT_NIT'];
         $credentials = new \stdClass;
-        $credentials->username = $_ENV['USER'];
-        $credentials->password = $_ENV['PASSWORD'];
+        $credentials->username = $_ENV['SIAT_USER'];
+        $credentials->password = $_ENV['SIAT_PASSWORD'];
         $auth = new Auth($nit, $credentials);
         $token = $auth->getAccessToken();
         $this->assertNotEmpty($token);

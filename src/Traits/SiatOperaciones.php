@@ -2,6 +2,9 @@
 
 namespace Enors\Siat\Traits;
 
+use Enors\Siat\EventoSignificativo;
+use Enors\Siat\PuntoVenta;
+
 trait SiatOperaciones
 {
     private function getOperacionesClient()
@@ -20,7 +23,7 @@ trait SiatOperaciones
         return $this->operacionesClient;
     }
 
-    public function registroEventoSignificativo($cuis, $cufd, $descripcion, $fechaInicioEvento, $fechaFinEvento, $codigoEvento)
+    public function registroEventoSignificativo(string $cuis, string $cufd, EventoSignificativo $eventoSignificativo)
     {
         $client = $this->getOperacionesClient();
         $response = $client->registroEventoSignificativo([
@@ -32,17 +35,17 @@ trait SiatOperaciones
                 'cufd' => $cufd,
                 'codigoSucursal' => $this->codigoSucursal,
                 'codigoPuntoVenta' => $this->codigoPuntoVenta,
-                'codigoMotivoEvento' => $codigoEvento,
-                'descripcion' => $descripcion,
-                'fechaHoraInicioEvento' => $fechaInicioEvento,
-                'fechaHoraFinEvento' => $fechaFinEvento,
+                'codigoMotivoEvento' => $eventoSignificativo->codigoEvento,
+                'descripcion' => $eventoSignificativo->descripcion,
+                'fechaHoraInicioEvento' => $eventoSignificativo->fechaInicioEvento,
+                'fechaHoraFinEvento' => $eventoSignificativo->fechaFinEvento,
                 'cufdEvento' => $cufd
             ],
         ]);
         return $response->RespuestaListaEventos;
     }
 
-    public function registroPuntoVenta($cuis, $descripcion, $nombrePuntoVenta, $codigoTipoPuntoVenta)
+    public function registroPuntoVenta(string $cuis, PuntoVenta $puntoVenta)
     {
         $client = $this->getOperacionesClient();
         $response = $client->registroPuntoVenta([
@@ -51,11 +54,11 @@ trait SiatOperaciones
                 'codigoModalidad' => $this->codigoModalidad,
                 'codigoSistema' => $this->codigoSistema,
                 'codigoSucursal' => $this->codigoSucursal,
-                'codigoTipoPuntoVenta' => $codigoTipoPuntoVenta,
+                'codigoTipoPuntoVenta' => $puntoVenta->codigoTipoPuntoVenta,
                 'cuis' => $cuis,
-                'descripcion' => $descripcion,
+                'descripcion' => $puntoVenta->descripcion,
                 'nit' => $this->nit,
-                'nombrePuntoVenta' => $nombrePuntoVenta
+                'nombrePuntoVenta' => $puntoVenta->nombrePuntoVenta
             ],
         ]);
         return $response->RespuestaRegistroPuntoVenta;

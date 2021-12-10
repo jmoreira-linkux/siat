@@ -14,11 +14,11 @@ class SiatOperacionesTest extends TestCase
     public static function setUpBeforeClass(): void
     {
         $credentials = new \stdClass;
-        $credentials->username = $_ENV['USER'];
-        $credentials->password = $_ENV['PASSWORD'];
-        $auth = new Auth($_ENV['NIT'], $credentials);
+        $credentials->username = $_ENV['SIAT_USER'];
+        $credentials->password = $_ENV['SIAT_PASSWORD'];
+        $auth = new Auth($_ENV['SIAT_NIT'], $credentials);
         $accessToken = $auth->getAccessToken();
-        self::$siat = new Siat($_ENV['CODIGO_SISTEMA'], $_ENV['NIT'], $accessToken);
+        self::$siat = new Siat($_ENV['SIAT_CODIGO_SISTEMA'], $_ENV['SIAT_NIT'], $accessToken);
         self::$cuis = self::$siat->solicitarCUIS()->codigo;
         self::$cufd = self::$siat->solicitarCUFD(self::$cuis)->codigo;
     }
@@ -26,23 +26,16 @@ class SiatOperacionesTest extends TestCase
     public function testRegistroEventoSignificativo()
     {
         date_default_timezone_set('America/La_Paz');
+        $eventoSignificativo = new EventoSignificativo(
+            1,
+            'CORTE DEL SERVICIO DE INTERNET',
+            date('Y-m-d\TH:i:s.v'),
+            date('Y-m-d\TH:i:s.v', strtotime('+3 hours', strtotime(date("Y-m-d\TH:i:s.v"))))
+        );
         $response = self::$siat->registroEventoSignificativo(
             self::$cuis,
             self::$cufd,
-            'CORTE DEL SERVICIO DE INTERNET',
-            date(
-                "Y-m-d\TH:i:s.v"
-            ),
-            date(
-                "Y-m-d\TH:i:s.v",
-                strtotime(
-                    '+3 hours',
-                    strtotime(
-                        date("Y-m-d\TH:i:s.v")
-                    )
-                )
-            ),
-            0
+            $eventoSignificativo
         );
         $this->assertIsBool($response->transaccion);
         $this->assertIsInt($response->codigoRecepcionEventoSignificativo);
@@ -51,11 +44,14 @@ class SiatOperacionesTest extends TestCase
     public function testRegistroPuntoVenta()
     {
         date_default_timezone_set('America/La_Paz');
+        $puntoVenta = new PuntoVenta(
+            2,
+            'nombrePuntoVenta1',
+            'descripcion'
+        );
         $response = self::$siat->registroPuntoVenta(
             self::$cuis,
-            "descripción",
-            "nombrePuntoVenta1",
-            2
+            $puntoVenta
         );
         $this->assertIsBool($response->transaccion);
         $this->assertIsInt($response->codigoPuntoVenta);

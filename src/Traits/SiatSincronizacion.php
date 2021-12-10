@@ -27,7 +27,7 @@ trait SiatSincronizacion
      * @param string $cuis
      * @return string Format 2021-12-04T00:19:57.987
      */
-    public function sincronizarFechaHora($cuis)
+    public function sincronizarFechaHora(string $cuis)
     {
         $client = $this->getSincronizacionClient();
         $response = $client->sincronizarFechaHora([
@@ -50,7 +50,7 @@ trait SiatSincronizacion
      * @param string $cuis
      * @return array<mixed> stdClass([codigoClasificador] => int, [descripcion] => string)
      */
-    public function sincronizarParametricaPaisOrigen($cuis)
+    public function sincronizarParametricaPaisOrigen(string $cuis)
     {
         $client = $this->getSincronizacionClient();
         $response = $client->sincronizarParametricaPaisOrigen([
@@ -73,7 +73,7 @@ trait SiatSincronizacion
      * @param string $cuis
      * @return array<mixed> stdClass([codigoClasificador] => int, [descripcion] => string)
      */
-    public function sincronizarParametricaUnidadMedida($cuis)
+    public function sincronizarParametricaUnidadMedida(string $cuis)
     {
         $client = $this->getSincronizacionClient();
         $response = $client->sincronizarParametricaUnidadMedida([
@@ -98,7 +98,7 @@ trait SiatSincronizacion
      * @return array<mixed> stdClass([codigoActividad] => string, [descripcionLeyenda] => string)
      */
 
-    public function sincronizarListaLeyendasFactura($cuis)
+    public function sincronizarListaLeyendasFactura(string $cuis)
     {
         $client = $this->getSincronizacionClient();
         $response = $client->sincronizarListaLeyendasFactura([
@@ -123,7 +123,7 @@ trait SiatSincronizacion
      * @return array<mixed> stdClass([codigoClasificador] => int, [descripcion] => string)
      */
 
-    public function sincronizarParametricaEventosSignificativos($cuis)
+    public function sincronizarParametricaEventosSignificativos(string $cuis)
     {
         $client = $this->getSincronizacionClient();
         $response = $client->sincronizarParametricaEventosSignificativos([
@@ -148,7 +148,7 @@ trait SiatSincronizacion
      * @return array<mixed> stdClass([codigoClasificador] => int, [descripcion] => string)
      */
 
-    public function sincronizarParametricaMotivoAnulacion($cuis)
+    public function sincronizarParametricaMotivoAnulacion(string $cuis)
     {
         $client = $this->getSincronizacionClient();
         $response = $client->sincronizarParametricaMotivoAnulacion([
@@ -172,7 +172,7 @@ trait SiatSincronizacion
      * @return array<mixed> stdClass([codigoClasificador] => int, [descripcion] => string)
      */
 
-    public function sincronizarParametricaTipoDocumentoIdentidad($cuis)
+    public function sincronizarParametricaTipoDocumentoIdentidad(string $cuis)
     {
         $client = $this->getSincronizacionClient();
         $response = $client->sincronizarParametricaTipoDocumentoIdentidad([
@@ -196,7 +196,7 @@ trait SiatSincronizacion
      * @return array<mixed> stdClass([codigoClasificador] => int, [descripcion] => string)
      */
 
-    public function sincronizarParametricaTipoMetodoPago($cuis)
+    public function sincronizarParametricaTipoMetodoPago(string $cuis)
     {
         $client = $this->getSincronizacionClient();
         $response = $client->sincronizarParametricaTipoMetodoPago([
@@ -220,7 +220,7 @@ trait SiatSincronizacion
      * @return array<mixed> stdClass([codigoClasificador] => int, [descripcion] => string)
      */
 
-    public function sincronizarParametricaTipoMoneda($cuis)
+    public function sincronizarParametricaTipoMoneda(string $cuis)
     {
         $client = $this->getSincronizacionClient();
         $response = $client->sincronizarParametricaTipoMoneda([
@@ -249,7 +249,7 @@ trait SiatSincronizacion
      * [codigoProducto] => int, [descripcionProducto] => string)
      */
 
-    public function sincronizarParametricaListaProductosServicios($cuis)
+    public function sincronizarParametricaListaProductosServicios(string $cuis)
     {
         $client = $this->getSincronizacionClient();
         $response = $client->sincronizarListaProductosServicios([
@@ -278,7 +278,7 @@ trait SiatSincronizacion
      * [codigoProducto] => int, [descripcionProducto] => string)
      */
 
-    public function sincronizarParametricaTipoHabitacion($cuis)
+    public function sincronizarParametricaTipoHabitacion(string $cuis)
     {
         $client = $this->getSincronizacionClient();
         $response = $client->sincronizarParametricaTipoHabitacion([
@@ -301,7 +301,7 @@ trait SiatSincronizacion
      * [codigoProducto] => int, [descripcionProducto] => string)
      */
 
-    public function sincronizarParametricaTipoPuntoVenta($cuis)
+    public function sincronizarParametricaTipoPuntoVenta(string $cuis)
     {
         $client = $this->getSincronizacionClient();
         $response = $client->sincronizarParametricaTipoPuntoVenta([
