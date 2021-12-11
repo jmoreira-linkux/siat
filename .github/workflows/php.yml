@@ -41,17 +41,10 @@ jobs:
 
     - name: Run test suite
       env:
-<<<<<<< HEAD
         SIAT_CODIGO_SISTEMA: ${{ secrets.SIAT_CODIGO_SISTEMA }}
         SIAT_NIT: ${{ secrets.SIAT_NIT }}
         SIAT_USER: ${{ secrets.SIAT_USER }}
         SIAT_PASSWORD: ${{ secrets.SIAT_PASSWORD }}
-=======
-        CODIGO_SISTEMA: ${{ secrets.CODIGO_SISTEMA }}
-        NIT: ${{ secrets.NIT }}
-        USER: ${{ secrets.USER }}
-        PASSWORD: ${{ secrets.PASSWORD }}
->>>>>>> 93a4328 (resolve #13 solicitud cufd)
       run: composer run-script test
 
     - name: Run code sniffer
