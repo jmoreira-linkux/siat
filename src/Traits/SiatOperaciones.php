@@ -78,4 +78,20 @@ trait SiatOperaciones
         ]);
         return $response->RespuestaConsultaPuntoVenta->listaPuntosVentas;
     }
+
+    public function cierrePuntoVenta(string $cuis)
+    {
+        $client = $this->getOperacionesClient();
+        $response = $client->CierrePuntoVenta([
+            'SolicitudCierrePuntoVenta' => [
+                'codigoAmbiente' => $this->codigoAmbiente,
+                'codigoPuntoVenta' => $this->codigoPuntoVenta,
+                'codigoSistema' => $this->codigoSistema,
+                'codigoSucursal' => $this->codigoSucursal,
+                'cuis' => $cuis,
+                'nit' => $this->nit,
+            ],
+        ]);
+        return $response->RespuestaCierrePuntoVenta;
+    }
 }
