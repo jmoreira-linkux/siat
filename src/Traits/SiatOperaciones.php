@@ -94,4 +94,21 @@ trait SiatOperaciones
         ]);
         return $response->RespuestaCierrePuntoVenta;
     }
+
+    public function cierreOperacionesSistema(string $cuis)
+    {
+        $client = $this->getOperacionesClient();
+        $response = $client->cierreOperacionesSistema([
+            'SolicitudOperaciones' => [
+                'codigoAmbiente' => $this->codigoAmbiente,
+                'codigoSistema' => $this->codigoSistema,
+                'nit' => $this->nit,
+                'codigoModalidad' => $this->codigoModalidad,
+                'cuis' => $cuis,
+                'codigoSucursal' => $this->codigoSucursal,
+                'codigoPuntoVenta' => $this->codigoPuntoVenta,
+            ],
+        ]);
+        return $response->RespuestaCierreSistemas;
+    }
 }

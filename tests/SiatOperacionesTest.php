@@ -72,4 +72,11 @@ class SiatOperacionesTest extends TestCase
         $this->assertIsBool($response->transaccion);
         $this->assertIsInt($response->codigoPuntoVenta);
     }
+
+    public function testCierreOperacionesSistema()
+    {
+        $response = self::$siat->cierreOperacionesSistema(self::$cuis);
+        $this->assertIsBool($response->transaccion);
+        $this->assertIsString($response->codigoSistema);
+    }
 }
