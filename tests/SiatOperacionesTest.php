@@ -56,4 +56,13 @@ class SiatOperacionesTest extends TestCase
         $this->assertIsBool($response->transaccion);
         $this->assertIsInt($response->codigoPuntoVenta);
     }
+
+    public function testConsultaPuntoVenta()
+    {
+        $response = self::$siat->consultaPuntoVenta(self::$cuis);
+        $this->assertGreaterThan(0, count($response));
+        $this->assertIsInt($response[0]->codigoPuntoVenta);
+        $this->assertIsString($response[0]->nombrePuntoVenta);
+        $this->assertIsString($response[0]->tipoPuntoVenta);
+    }
 }

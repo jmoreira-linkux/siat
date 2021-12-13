@@ -63,4 +63,19 @@ trait SiatOperaciones
         ]);
         return $response->RespuestaRegistroPuntoVenta;
     }
+
+    public function consultaPuntoVenta(string $cuis)
+    {
+        $client = $this->getOperacionesClient();
+        $response = $client->consultaPuntoVenta([
+            'SolicitudConsultaPuntoVenta' => [
+                'codigoAmbiente' => $this->codigoAmbiente,
+                'codigoSistema' => $this->codigoSistema,
+                'codigoSucursal' => $this->codigoSucursal,
+                'cuis' => $cuis,
+                'nit' => $this->nit,
+            ],
+        ]);
+        return $response->RespuestaConsultaPuntoVenta->listaPuntosVentas;
+    }
 }
