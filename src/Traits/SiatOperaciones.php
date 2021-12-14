@@ -61,6 +61,7 @@ trait SiatOperaciones
                 'nombrePuntoVenta' => $puntoVenta->nombrePuntoVenta
             ],
         ]);
+        var_dump($response);
         return $response->RespuestaRegistroPuntoVenta;
     }
 

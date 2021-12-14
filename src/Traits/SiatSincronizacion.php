@@ -75,6 +75,7 @@ trait SiatSincronizacion
      */
     public function sincronizarParametricaUnidadMedida(string $cuis)
     {
+        var_dump('codigo punto venta: '.$this->codigoPuntoVenta);
         $client = $this->getSincronizacionClient();
         $response = $client->sincronizarParametricaUnidadMedida([
             'SolicitudSincronizacion' => [
@@ -314,6 +315,7 @@ trait SiatSincronizacion
                 'codigoPuntoVenta' => $this->codigoPuntoVenta,
             ],
         ]);
+        var_dump($response);
         return $response->RespuestaListaParametricas->listaCodigos;
     }
 }
