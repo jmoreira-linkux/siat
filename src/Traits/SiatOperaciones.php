@@ -23,6 +23,24 @@ trait SiatOperaciones
         return $this->operacionesClient;
     }
 
+    public function consultaEventoSignificativo(string $cuis, string $cufd, int $timestamp)
+    {
+        $client = $this->getOperacionesClient();
+        $response = $client->consultaEventoSignificativo([
+            'SolicitudConsultaEvento' => [
+                'codigoAmbiente' => $this->codigoAmbiente,
+                'codigoSistema' => $this->codigoSistema,
+                'nit' => $this->nit,
+                'cuis' => $cuis,
+                'cufd' => $cufd,
+                'codigoSucursal' => $this->codigoSucursal,
+                'codigoPuntoVenta' => $this->codigoPuntoVenta,
+                'fechaEvento' => date('Y-m-d', $timestamp)
+            ]
+        ]);
+        return $response;
+    }
+
     public function registroEventoSignificativo(string $cuis, string $cufd, EventoSignificativo $eventoSignificativo)
     {
         $client = $this->getOperacionesClient();
@@ -37,8 +55,8 @@ trait SiatOperaciones
                 'codigoPuntoVenta' => $this->codigoPuntoVenta,
                 'codigoMotivoEvento' => $eventoSignificativo->codigoEvento,
                 'descripcion' => $eventoSignificativo->descripcion,
-                'fechaHoraInicioEvento' => $eventoSignificativo->fechaInicioEvento,
-                'fechaHoraFinEvento' => $eventoSignificativo->fechaFinEvento,
+                'fechaHoraInicioEvento' => date('Y-m-d\TH:i:s.v', $eventoSignificativo->fechaInicioEvento),
+                'fechaHoraFinEvento' => date('Y-m-d\TH:i:s.v', $eventoSignificativo->fechaFinEvento),
                 'cufdEvento' => $cufd
             ],
         ]);
@@ -61,7 +79,6 @@ trait SiatOperaciones
                 'nombrePuntoVenta' => $puntoVenta->nombrePuntoVenta
             ],
         ]);
-        var_dump($response);
         return $response->RespuestaRegistroPuntoVenta;
     }
 

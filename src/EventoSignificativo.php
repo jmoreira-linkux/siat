@@ -7,8 +7,8 @@ class EventoSignificativo
     public function __construct(
         int $codigoEvento,
         string $descripcion,
-        string $fechaInicioEvento,
-        string $fechaFinEvento
+        int $fechaInicioEvento,
+        int $fechaFinEvento
     ) {
         $this->codigoEvento = $codigoEvento;
         $this->descripcion = $descripcion;

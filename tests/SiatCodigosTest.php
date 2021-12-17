@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 class SiatCodigosTest extends TestCase
 {
     private static $accessToken;
-    private static $cuis;
+    const CODIGO_PUNTO_VENTA = 3;
 
     public static function setUpBeforeClass(): void
     {
@@ -17,34 +17,33 @@ class SiatCodigosTest extends TestCase
         $credentials->password = $_ENV['SIAT_PASSWORD'];
         $auth = new Auth($_ENV['SIAT_NIT'], $credentials);
         self::$accessToken = $auth->getAccessToken();
-        $siat = new Siat($_ENV['SIAT_CODIGO_SISTEMA'], $_ENV['SIAT_NIT'], self::$accessToken);
-        self::$cuis = $siat->solicitarCUIS()->codigo;
     }
 
     public function testSolicitarCUIS()
     {
         $siat = new Siat($_ENV['SIAT_CODIGO_SISTEMA'], $_ENV['SIAT_NIT'], self::$accessToken);
-        $cuis = $siat->solicitarCUIS();
-        $this->assertNotEmpty($cuis->codigo);
-        $this->assertNotEmpty($cuis->fechaVigencia);
-    }
+        $cuis0 = $siat->solicitarCUIS();
+        $this->assertNotEmpty($cuis0->codigo);
+        $this->assertNotEmpty($cuis0->fechaVigencia);
 
-    /**
-     * Segundo Test Solicitar CUIS
-     */
-    public function testSolicitarCUIS2()
-    {
-        $siat = new Siat($_ENV['SIAT_CODIGO_SISTEMA'], $_ENV['SIAT_NIT'], self::$accessToken, 2, 2, 0, 1);
-        $cuis = $siat->solicitarCUIS();
-        $this->assertNotEmpty($cuis->codigo);
-        $this->assertNotEmpty($cuis->fechaVigencia);
+        $siat->codigoPuntoVenta = self::CODIGO_PUNTO_VENTA;
+        $cuis1 = $siat->solicitarCUIS();
+        $this->assertNotEmpty($cuis1->codigo);
+        $this->assertNotEmpty($cuis1->fechaVigencia);
     }
 
     public function testSolicitarCUFD()
     {
         $siat = new Siat($_ENV['SIAT_CODIGO_SISTEMA'], $_ENV['SIAT_NIT'], self::$accessToken);
-        $cufd = $siat->solicitarCUFD(self::$cuis);
-        $this->assertNotEmpty($cufd->codigo);
-        $this->assertNotEmpty($cufd->codigoControl);
+        $cuis0 = $siat->solicitarCUIS();
+        $cufd0 = $siat->solicitarCUFD($cuis0->codigo);
+        $this->assertNotEmpty($cufd0->codigo);
+        $this->assertNotEmpty($cufd0->codigoControl);
+
+        $siat->codigoPuntoVenta = self::CODIGO_PUNTO_VENTA;
+        $cuis1 = $siat->solicitarCUIS();
+        $cufd1 = $siat->solicitarCUFD($cuis1->codigo);
+        $this->assertNotEmpty($cufd1->codigo);
+        $this->assertNotEmpty($cufd1->codigoControl);
     }
 }

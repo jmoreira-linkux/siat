@@ -39,10 +39,10 @@ class Siat
         string $codigoSistema,
         int $nit,
         string $token,
-        int $codigoModalidad = 2,
-        int $codigoAmbiente = 2,
+        int $codigoPuntoVenta = 0,
         int $codigoSucursal = 0,
-        int $codigoPuntoVenta = 0
+        int $codigoModalidad = self::MODALIDAD_COMPUTARIZADA,
+        int $codigoAmbiente = self::AMBIENTE_PRUEBA_PILOTO
     ) {
         $this->codigoSistema = $codigoSistema;
         $this->nit = $nit;

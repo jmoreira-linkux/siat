@@ -21,6 +21,29 @@ trait SiatSincronizacion
     }
 
     /**
+     * Método por el cual el Sistema Informático de Facturación autorizado realiza la sincronización del catálogo de
+     * actividades.
+     *
+     * @param string $cuis
+     * @return array<mixed> stdClass([codigoCaeb] => string, [descripcion] => string, [tipoActividad] => string)
+     */
+    public function sincronizarActividades(string $cuis)
+    {
+        $client = $this->getSincronizacionClient();
+        $response = $client->sincronizarActividades([
+            'SolicitudSincronizacion' => [
+                'codigoAmbiente' => $this->codigoAmbiente,
+                'codigoSistema' => $this->codigoSistema,
+                'nit' => $this->nit,
+                'cuis' => $cuis,
+                'codigoSucursal' => $this->codigoSucursal,
+                'codigoPuntoVenta' => $this->codigoPuntoVenta,
+            ],
+        ]);
+        return $response->RespuestaListaActividades->listaActividades;
+    }
+
+    /**
      * Este proceso tiene como objetivo sincronizar la fecha y hora del Sistema de Facturación del Contribuyente
      * con los datos proporcionadas por el SIN.
      *
@@ -75,7 +98,6 @@ trait SiatSincronizacion
      */
     public function sincronizarParametricaUnidadMedida(string $cuis)
     {
-        var_dump('codigo punto venta: '.$this->codigoPuntoVenta);
         $client = $this->getSincronizacionClient();
         $response = $client->sincronizarParametricaUnidadMedida([
             'SolicitudSincronizacion' => [
@@ -91,6 +113,30 @@ trait SiatSincronizacion
     }
 
     /**
+     * Método por el cual el Sistema Informático de Facturación autorizado realiza la sincronización del catálogo de
+     * actividades documento sector.
+     *
+     * @param string $cuis
+     * @return array<mixed> stdClass([codigoActividad] => string,
+     * [codigoDocumentoSector] => int, [tipoDocumentoSector] => string)
+     */
+    public function sincronizarActividadesDocumentoSector(string $cuis)
+    {
+        $client = $this->getSincronizacionClient();
+        $response = $client->sincronizarListaActividadesDocumentoSector([
+            'SolicitudSincronizacion' => [
+                'codigoAmbiente' => $this->codigoAmbiente,
+                'codigoSistema' => $this->codigoSistema,
+                'nit' => $this->nit,
+                'cuis' => $cuis,
+                'codigoSucursal' => $this->codigoSucursal,
+                'codigoPuntoVenta' => $this->codigoPuntoVenta,
+            ],
+        ]);
+        return $response->RespuestaListaActividadesDocumentoSector->listaActividadesDocumentoSector;
+    }
+
+    /**
      * Método por el cual el Sistema Informático de Facturación autorizado realiza la
      * sincronización del catálogo de leyendas que deben incluirse en las Facturas de
      * manera aleatoria de acuerdo a su actividad económica.
@@ -98,7 +144,6 @@ trait SiatSincronizacion
      * @param string $cuis
      * @return array<mixed> stdClass([codigoActividad] => string, [descripcionLeyenda] => string)
      */
-
     public function sincronizarListaLeyendasFactura(string $cuis)
     {
         $client = $this->getSincronizacionClient();
@@ -117,13 +162,35 @@ trait SiatSincronizacion
 
     /**
      * Método por el cual el Sistema Informático de Facturación autorizado realiza la
+     * sincronización del catálogo de mensajes servicios.
+     *
+     * @param string $cuis
+     * @return array<mixed> stdClass([codigoClasificador] => int, [descripcion] => string)
+     */
+    public function sincronizarListaMensajesServicios(string $cuis)
+    {
+        $client = $this->getSincronizacionClient();
+        $response = $client->sincronizarListaMensajesServicios([
+            'SolicitudSincronizacion' => [
+                'codigoAmbiente' => $this->codigoAmbiente,
+                'codigoSistema' => $this->codigoSistema,
+                'nit' => $this->nit,
+                'cuis' => $cuis,
+                'codigoSucursal' => $this->codigoSucursal,
+                'codigoPuntoVenta' => $this->codigoPuntoVenta,
+            ],
+        ]);
+        return $response->RespuestaListaParametricas->listaCodigos;
+    }
+
+    /**
+     * Método por el cual el Sistema Informático de Facturación autorizado realiza la
      * sincronización del catálogo de eventos significativos para el registro de eventos
      * que ocurren en el Sistema Informático de Facturación.
      *
      * @param string $cuis
      * @return array<mixed> stdClass([codigoClasificador] => int, [descripcion] => string)
      */
-
     public function sincronizarParametricaEventosSignificativos(string $cuis)
     {
         $client = $this->getSincronizacionClient();
@@ -148,7 +215,6 @@ trait SiatSincronizacion
      * @param string $cuis
      * @return array<mixed> stdClass([codigoClasificador] => int, [descripcion] => string)
      */
-
     public function sincronizarParametricaMotivoAnulacion(string $cuis)
     {
         $client = $this->getSincronizacionClient();
@@ -172,11 +238,56 @@ trait SiatSincronizacion
      * @param string $cuis
      * @return array<mixed> stdClass([codigoClasificador] => int, [descripcion] => string)
      */
-
     public function sincronizarParametricaTipoDocumentoIdentidad(string $cuis)
     {
         $client = $this->getSincronizacionClient();
         $response = $client->sincronizarParametricaTipoDocumentoIdentidad([
+            'SolicitudSincronizacion' => [
+                'codigoAmbiente' => $this->codigoAmbiente,
+                'codigoSistema' => $this->codigoSistema,
+                'nit' => $this->nit,
+                'cuis' => $cuis,
+                'codigoSucursal' => $this->codigoSucursal,
+                'codigoPuntoVenta' => $this->codigoPuntoVenta,
+            ],
+        ]);
+        return $response->RespuestaListaParametricas->listaCodigos;
+    }
+
+    /**
+     * Método por el cual el Sistema Informático de Facturación autorizado realiza la sincronización
+     * del catálogo de tipo documento sector.
+     *
+     * @param string $cuis
+     * @return array<mixed> stdClass([codigoClasificador] => int, [descripcion] => string)
+     */
+    public function sincronizarParametricaTipoDocumentoSector(string $cuis)
+    {
+        $client = $this->getSincronizacionClient();
+        $response = $client->sincronizarParametricaTipoDocumentoSector([
+            'SolicitudSincronizacion' => [
+                'codigoAmbiente' => $this->codigoAmbiente,
+                'codigoSistema' => $this->codigoSistema,
+                'nit' => $this->nit,
+                'cuis' => $cuis,
+                'codigoSucursal' => $this->codigoSucursal,
+                'codigoPuntoVenta' => $this->codigoPuntoVenta,
+            ],
+        ]);
+        return $response->RespuestaListaParametricas->listaCodigos;
+    }
+
+    /**
+     * Método por el cual el Sistema Informático de Facturación autorizado realiza la sincronización
+     * del catálogo de tipo emision.
+     *
+     * @param string $cuis
+     * @return array<mixed> stdClass([codigoClasificador] => int, [descripcion] => string)
+     */
+    public function sincronizarParametricaTipoEmision(string $cuis)
+    {
+        $client = $this->getSincronizacionClient();
+        $response = $client->sincronizarParametricaTipoEmision([
             'SolicitudSincronizacion' => [
                 'codigoAmbiente' => $this->codigoAmbiente,
                 'codigoSistema' => $this->codigoSistema,
@@ -196,7 +307,6 @@ trait SiatSincronizacion
      * @param string $cuis
      * @return array<mixed> stdClass([codigoClasificador] => int, [descripcion] => string)
      */
-
     public function sincronizarParametricaTipoMetodoPago(string $cuis)
     {
         $client = $this->getSincronizacionClient();
@@ -220,7 +330,6 @@ trait SiatSincronizacion
      * @param string $cuis
      * @return array<mixed> stdClass([codigoClasificador] => int, [descripcion] => string)
      */
-
     public function sincronizarParametricaTipoMoneda(string $cuis)
     {
         $client = $this->getSincronizacionClient();
@@ -249,7 +358,6 @@ trait SiatSincronizacion
      * @return array<mixed> stdClass([codigoActividad] => string,
      * [codigoProducto] => int, [descripcionProducto] => string)
      */
-
     public function sincronizarParametricaListaProductosServicios(string $cuis)
     {
         $client = $this->getSincronizacionClient();
@@ -275,10 +383,8 @@ trait SiatSincronizacion
      * con los de la Administración Tributaria.
      *
      * @param string $cuis
-     * @return array<mixed> stdClass([codigoActividad] => string,
-     * [codigoProducto] => int, [descripcionProducto] => string)
+     * @return array<mixed> stdClass([codigoClasificador] => int, [descripcion] => string)
      */
-
     public function sincronizarParametricaTipoHabitacion(string $cuis)
     {
         $client = $this->getSincronizacionClient();
@@ -298,10 +404,8 @@ trait SiatSincronizacion
     /**
      *
      * @param string $cuis
-     * @return array<mixed> stdClass([codigoActividad] => string,
-     * [codigoProducto] => int, [descripcionProducto] => string)
+     * @return array<mixed> stdClass([codigoClasificador] => int, [descripcion] => string)
      */
-
     public function sincronizarParametricaTipoPuntoVenta(string $cuis)
     {
         $client = $this->getSincronizacionClient();
@@ -315,7 +419,27 @@ trait SiatSincronizacion
                 'codigoPuntoVenta' => $this->codigoPuntoVenta,
             ],
         ]);
-        var_dump($response);
+        return $response->RespuestaListaParametricas->listaCodigos;
+    }
+
+    /**
+     *
+     * @param string $cuis
+     * @return array<mixed> stdClass([codigoClasificador] => int, [descripcion] => string)
+     */
+    public function sincronizarParametricaTiposFactura(string $cuis)
+    {
+        $client = $this->getSincronizacionClient();
+        $response = $client->sincronizarParametricaTiposFactura([
+            'SolicitudSincronizacion' => [
+                'codigoAmbiente' => $this->codigoAmbiente,
+                'codigoSistema' => $this->codigoSistema,
+                'nit' => $this->nit,
+                'cuis' => $cuis,
+                'codigoSucursal' => $this->codigoSucursal,
+                'codigoPuntoVenta' => $this->codigoPuntoVenta,
+            ],
+        ]);
         return $response->RespuestaListaParametricas->listaCodigos;
     }
 }

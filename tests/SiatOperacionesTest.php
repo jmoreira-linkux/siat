@@ -7,9 +7,14 @@ use PHPUnit\Framework\TestCase;
 
 class SiatOperacionesTest extends TestCase
 {
-    private static $siat;
-    private static $cuis;
-    private static $cufd;
+    private static $siat0;
+    private static $siat1;
+    private static $cuis0;
+    private static $cuis1;
+    private static $cufd0;
+    private static $cufd1;
+
+    const CODIGO_PUNTO_VENTA = 3;
 
     public static function setUpBeforeClass(): void
     {
@@ -18,306 +23,212 @@ class SiatOperacionesTest extends TestCase
         $credentials->password = $_ENV['SIAT_PASSWORD'];
         $auth = new Auth($_ENV['SIAT_NIT'], $credentials);
         $accessToken = $auth->getAccessToken();
-        self::$siat = new Siat($_ENV['SIAT_CODIGO_SISTEMA'], $_ENV['SIAT_NIT'], $accessToken);
-        self::$cuis = self::$siat->solicitarCUIS()->codigo;
-        self::$cufd = self::$siat->solicitarCUFD(self::$cuis)->codigo;
+        self::$siat0 = new Siat($_ENV['SIAT_CODIGO_SISTEMA'], $_ENV['SIAT_NIT'], $accessToken);
+        self::$siat1 = new Siat($_ENV['SIAT_CODIGO_SISTEMA'], $_ENV['SIAT_NIT'], $accessToken);
+        self::$siat1->codigoPuntoVenta = self::CODIGO_PUNTO_VENTA;
+        self::$cuis0 = self::$siat0->solicitarCUIS()->codigo;
+        self::$cuis1 = self::$siat1->solicitarCUIS()->codigo;
+        self::$cufd0 = self::$siat0->solicitarCUFD(self::$cuis0)->codigo;
+        self::$cufd1 = self::$siat1->solicitarCUFD(self::$cuis1)->codigo;
     }
 
-    public function testRegistroEventoSignificativo()
-    {
-        date_default_timezone_set('America/La_Paz');
-        $eventoSignificativo = new EventoSignificativo(
-            1,
-            'CORTE DEL SERVICIO DE INTERNET',
-            date('Y-m-d\TH:i:s.v'),
-            date('Y-m-d\TH:i:s.v', strtotime('+3 hours', strtotime(date("Y-m-d\TH:i:s.v"))))
-        );
-        $response = self::$siat->registroEventoSignificativo(
-            self::$cuis,
-            self::$cufd,
-            $eventoSignificativo
-        );
-        $this->assertIsBool($response->transaccion);
-        $this->assertIsInt($response->codigoRecepcionEventoSignificativo);
-    }
+    // public function testRegistroEventoSignificativo1()
+    // {
+    //     $eventoSignificativo = new EventoSignificativo(
+    //         1,
+    //         'CORTE DEL SERVICIO DE INTERNET',
+    //         time(),
+    //         strtotime('+5 minutes')
+    //     );
+    //     $response0 = self::$siat0->registroEventoSignificativo(
+    //         self::$cuis0,
+    //         self::$cufd0,
+    //         $eventoSignificativo
+    //     );
+    //     $this->assertIsBool($response0->transaccion);
+    //     $this->assertIsInt($response0->codigoRecepcionEventoSignificativo);
 
-    public function testRegistroEventoSignificativo11()
-    {
-        date_default_timezone_set('America/La_Paz');
-        $eventoSignificativo = new EventoSignificativo(
-            1,
-            'CORTE DEL SERVICIO DE INTERNET',
-            date('Y-m-d\TH:i:s.v'),
-            date('Y-m-d\TH:i:s.v', strtotime('+3 hours', strtotime(date("Y-m-d\TH:i:s.v"))))
-        );
-        self::$siat->codigoPuntoVenta = 1;
-        $response = self::$siat->registroEventoSignificativo(
-            self::$cuis,
-            self::$cufd,
-            $eventoSignificativo
-        );
-        $this->assertIsBool($response->transaccion);
-        $this->assertIsInt($response->codigoRecepcionEventoSignificativo);
-    }
+    //     $response1 = self::$siat1->registroEventoSignificativo(
+    //         self::$cuis1,
+    //         self::$cufd1,
+    //         $eventoSignificativo
+    //     );
+    //     $this->assertIsBool($response1->transaccion);
+    //     $this->assertIsInt($response1->codigoRecepcionEventoSignificativo);
+    // }
 
-    public function testRegistroEventoSignificativo20()
-    {
-        date_default_timezone_set('America/La_Paz');
-        $eventoSignificativo = new EventoSignificativo(
-            2,
-            'INACCESIBILIDAD AL SERVICIO WEB DE LA ADMINISTRACIÓN TRIBUTARIA',
-            date('Y-m-d\TH:i:s.v'),
-            date('Y-m-d\TH:i:s.v', strtotime('+3 hours', strtotime(date("Y-m-d\TH:i:s.v"))))
-        );
-        $response = self::$siat->registroEventoSignificativo(
-            self::$cuis,
-            self::$cufd,
-            $eventoSignificativo
-        );
-        $this->assertIsBool($response->transaccion);
-        $this->assertIsInt($response->codigoRecepcionEventoSignificativo);
-    }
+    // public function testRegistroEventoSignificativo2()
+    // {
+    //     $eventoSignificativo = new EventoSignificativo(
+    //         2,
+    //         'INACCESIBILIDAD AL SERVICIO WEB DE LA ADMINISTRACIÓN TRIBUTARIA',
+    //         strtotime('+5 minutes'),
+    //         strtotime('+10 minutes')
+    //     );
+    //     $response0 = self::$siat0->registroEventoSignificativo(
+    //         self::$cuis0,
+    //         self::$cufd0,
+    //         $eventoSignificativo
+    //     );
 
-    public function testRegistroEventoSignificativo21()
-    {
-        date_default_timezone_set('America/La_Paz');
-        $eventoSignificativo = new EventoSignificativo(
-            2,
-            'INACCESIBILIDAD AL SERVICIO WEB DE LA ADMINISTRACIÓN TRIBUTARIA',
-            date('Y-m-d\TH:i:s.v'),
-            date('Y-m-d\TH:i:s.v', strtotime('+3 hours', strtotime(date("Y-m-d\TH:i:s.v"))))
-        );
-        self::$siat->codigoPuntoVenta = 1;
-        $response = self::$siat->registroEventoSignificativo(
-            self::$cuis,
-            self::$cufd,
-            $eventoSignificativo
-        );
-        $this->assertIsBool($response->transaccion);
-        $this->assertIsInt($response->codigoRecepcionEventoSignificativo);
-    }
+    //     $this->assertIsBool($response0->transaccion);
+    //     $this->assertIsInt($response0->codigoRecepcionEventoSignificativo);
 
-    public function testRegistroEventoSignificativo30()
-    {
-        date_default_timezone_set('America/La_Paz');
-        $eventoSignificativo = new EventoSignificativo(
-            3,
-            'INGRESO A ZONAS SIN INTERNET POR DESPLIEGUE DE PUNTO DE VENTA EN VEHICULOS AUTOMOTORES',
-            date('Y-m-d\TH:i:s.v'),
-            date('Y-m-d\TH:i:s.v', strtotime('+3 hours', strtotime(date("Y-m-d\TH:i:s.v"))))
-        );
-        $response = self::$siat->registroEventoSignificativo(
-            self::$cuis,
-            self::$cufd,
-            $eventoSignificativo
-        );
-        $this->assertIsBool($response->transaccion);
-        $this->assertIsInt($response->codigoRecepcionEventoSignificativo);
-    }
+    //     $response1 = self::$siat1->registroEventoSignificativo(
+    //         self::$cuis1,
+    //         self::$cufd1,
+    //         $eventoSignificativo
+    //     );
+    //     $this->assertIsBool($response1->transaccion);
+    //     $this->assertIsInt($response1->codigoRecepcionEventoSignificativo);
+    // }
 
-    public function testRegistroEventoSignificativo31()
-    {
-        date_default_timezone_set('America/La_Paz');
-        $eventoSignificativo = new EventoSignificativo(
-            3,
-            'INGRESO A ZONAS SIN INTERNET POR DESPLIEGUE DE PUNTO DE VENTA EN VEHICULOS AUTOMOTORES',
-            date('Y-m-d\TH:i:s.v'),
-            date('Y-m-d\TH:i:s.v', strtotime('+3 hours', strtotime(date("Y-m-d\TH:i:s.v"))))
-        );
-        self::$siat->codigoPuntoVenta = 1;
-        $response = self::$siat->registroEventoSignificativo(
-            self::$cuis,
-            self::$cufd,
-            $eventoSignificativo
-        );
-        $this->assertIsBool($response->transaccion);
-        $this->assertIsInt($response->codigoRecepcionEventoSignificativo);
-    }
+    // public function testRegistroEventoSignificativo3()
+    // {
+    //     $eventoSignificativo = new EventoSignificativo(
+    //         3,
+    //         'INGRESO A ZONAS SIN INTERNET POR DESPLIEGUE DE PUNTO DE VENTA EN VEHICULOS AUTOMOTORES',
+    //         strtotime('+15 minutes'),
+    //         strtotime('+20 minutes')
+    //     );
+    //     $response0 = self::$siat0->registroEventoSignificativo(
+    //         self::$cuis0,
+    //         self::$cufd0,
+    //         $eventoSignificativo
+    //     );
+    //     $this->assertIsBool($response0->transaccion);
+    //     $this->assertIsInt($response0->codigoRecepcionEventoSignificativo);
 
-    public function testRegistroEventoSignificativo40()
-    {
-        date_default_timezone_set('America/La_Paz');
-        $eventoSignificativo = new EventoSignificativo(
-            4,
-            'VENTA EN LUGARES SIN INTERNET',
-            date('Y-m-d\TH:i:s.v'),
-            date('Y-m-d\TH:i:s.v', strtotime('+3 hours', strtotime(date("Y-m-d\TH:i:s.v"))))
-        );
-        $response = self::$siat->registroEventoSignificativo(
-            self::$cuis,
-            self::$cufd,
-            $eventoSignificativo
-        );
-        $this->assertIsBool($response->transaccion);
-        $this->assertIsInt($response->codigoRecepcionEventoSignificativo);
-    }
+    //     $response1 = self::$siat1->registroEventoSignificativo(
+    //         self::$cuis1,
+    //         self::$cufd1,
+    //         $eventoSignificativo
+    //     );
+    //     $this->assertIsBool($response1->transaccion);
+    //     $this->assertIsInt($response1->codigoRecepcionEventoSignificativo);
+    // }
 
-    public function testRegistroEventoSignificativo41()
-    {
-        date_default_timezone_set('America/La_Paz');
-        $eventoSignificativo = new EventoSignificativo(
-            4,
-            'VENTA EN LUGARES SIN INTERNET',
-            date('Y-m-d\TH:i:s.v'),
-            date('Y-m-d\TH:i:s.v', strtotime('+3 hours', strtotime(date("Y-m-d\TH:i:s.v"))))
-        );
-        self::$siat->codigoPuntoVenta = 1;
-        $response = self::$siat->registroEventoSignificativo(
-            self::$cuis,
-            self::$cufd,
-            $eventoSignificativo
-        );
-        $this->assertIsBool($response->transaccion);
-        $this->assertIsInt($response->codigoRecepcionEventoSignificativo);
-    }
+    // public function testRegistroEventoSignificativo4()
+    // {
+    //     $eventoSignificativo = new EventoSignificativo(
+    //         4,
+    //         'VENTA EN LUGARES SIN INTERNET',
+    //         strtotime('+25 minutes'),
+    //         strtotime('+30 minutes')
+    //     );
+    //     $response0 = self::$siat0->registroEventoSignificativo(
+    //         self::$cuis0,
+    //         self::$cufd0,
+    //         $eventoSignificativo
+    //     );
+    //     $this->assertIsBool($response0->transaccion);
+    //     $this->assertIsInt($response0->codigoRecepcionEventoSignificativo);
 
-    public function testRegistroEventoSignificativo50()
-    {
-        date_default_timezone_set('America/La_Paz');
-        $eventoSignificativo = new EventoSignificativo(
-            5,
-            'CORTE DE SUMINISTRO DE ENERGIA ELECTRICA',
-            date('Y-m-d\TH:i:s.v'),
-            date('Y-m-d\TH:i:s.v', strtotime('+3 hours', strtotime(date("Y-m-d\TH:i:s.v"))))
-        );
-        $response = self::$siat->registroEventoSignificativo(
-            self::$cuis,
-            self::$cufd,
-            $eventoSignificativo
-        );
-        $this->assertIsBool($response->transaccion);
-        $this->assertIsInt($response->codigoRecepcionEventoSignificativo);
-    }
+    //     $response1 = self::$siat1->registroEventoSignificativo(
+    //         self::$cuis1,
+    //         self::$cufd1,
+    //         $eventoSignificativo
+    //     );
+    //     $this->assertIsBool($response1->transaccion);
+    //     $this->assertIsInt($response1->codigoRecepcionEventoSignificativo);
+    // }
 
-    public function testRegistroEventoSignificativo51()
-    {
-        date_default_timezone_set('America/La_Paz');
-        $eventoSignificativo = new EventoSignificativo(
-            5,
-            'CORTE DE SUMINISTRO DE ENERGIA ELECTRICA',
-            date('Y-m-d\TH:i:s.v'),
-            date('Y-m-d\TH:i:s.v', strtotime('+3 hours', strtotime(date("Y-m-d\TH:i:s.v"))))
-        );
-        self::$siat->codigoPuntoVenta = 1;
-        $response = self::$siat->registroEventoSignificativo(
-            self::$cuis,
-            self::$cufd,
-            $eventoSignificativo
-        );
-        $this->assertIsBool($response->transaccion);
-        $this->assertIsInt($response->codigoRecepcionEventoSignificativo);
-    }
+    // public function testRegistroEventoSignificativo5()
+    // {
+    //     $eventoSignificativo = new EventoSignificativo(
+    //         5,
+    //         'CORTE DE SUMINISTRO DE ENERGIA ELECTRICA',
+    //         strtotime('+35 minutes'),
+    //         strtotime('+40 minutes')
+    //     );
+    //     $response0 = self::$siat0->registroEventoSignificativo(
+    //         self::$cuis0,
+    //         self::$cufd0,
+    //         $eventoSignificativo
+    //     );
+    //     $this->assertIsBool($response0->transaccion);
+    //     $this->assertIsInt($response0->codigoRecepcionEventoSignificativo);
 
-    public function testRegistroEventoSignificativo60()
-    {
-        date_default_timezone_set('America/La_Paz');
-        $eventoSignificativo = new EventoSignificativo(
-            6,
-            'VIRUS INFORMÁTICO O FALLA DE SOFTWARE',
-            date('Y-m-d\TH:i:s.v'),
-            date('Y-m-d\TH:i:s.v', strtotime('+3 hours', strtotime(date("Y-m-d\TH:i:s.v"))))
-        );
-        $response = self::$siat->registroEventoSignificativo(
-            self::$cuis,
-            self::$cufd,
-            $eventoSignificativo
-        );
-        $this->assertIsBool($response->transaccion);
-        $this->assertIsInt($response->codigoRecepcionEventoSignificativo);
-    }
+    //     $response1 = self::$siat1->registroEventoSignificativo(
+    //         self::$cuis1,
+    //         self::$cufd1,
+    //         $eventoSignificativo
+    //     );
+    //     $this->assertIsBool($response1->transaccion);
+    //     $this->assertIsInt($response1->codigoRecepcionEventoSignificativo);
+    // }
 
-    public function testRegistroEventoSignificativo61()
-    {
-        date_default_timezone_set('America/La_Paz');
-        $eventoSignificativo = new EventoSignificativo(
-            6,
-            'VIRUS INFORMÁTICO O FALLA DE SOFTWARE',
-            date('Y-m-d\TH:i:s.v'),
-            date('Y-m-d\TH:i:s.v', strtotime('+3 hours', strtotime(date("Y-m-d\TH:i:s.v"))))
-        );
-        self::$siat->codigoPuntoVenta = 1;
-        $response = self::$siat->registroEventoSignificativo(
-            self::$cuis,
-            self::$cufd,
-            $eventoSignificativo
-        );
-        $this->assertIsBool($response->transaccion);
-        $this->assertIsInt($response->codigoRecepcionEventoSignificativo);
-    }
+    // public function testRegistroEventoSignificativo6()
+    // {
+    //     $eventoSignificativo = new EventoSignificativo(
+    //         6,
+    //         'VIRUS INFORMÁTICO O FALLA DE SOFTWARE',
+    //         strtotime('+45 minutes'),
+    //         strtotime('+50 minutes')
+    //     );
+    //     $response0 = self::$siat0->registroEventoSignificativo(
+    //         self::$cuis0,
+    //         self::$cufd0,
+    //         $eventoSignificativo
+    //     );
+    //     $this->assertIsBool($response0->transaccion);
+    //     $this->assertIsInt($response0->codigoRecepcionEventoSignificativo);
 
-    public function testRegistroEventoSignificativo70()
-    {
-        date_default_timezone_set('America/La_Paz');
-        $eventoSignificativo = new EventoSignificativo(
-            7,
-            'CAMBIO DE INFRAESTRUCTURA DEL SISTEMA INFORMÁTICO DE FACTURACIÓN O FALLA DE HARDWARE',
-            date('Y-m-d\TH:i:s.v'),
-            date('Y-m-d\TH:i:s.v', strtotime('+3 hours', strtotime(date("Y-m-d\TH:i:s.v"))))
-        );
-        $response = self::$siat->registroEventoSignificativo(
-            self::$cuis,
-            self::$cufd,
-            $eventoSignificativo
-        );
-        $this->assertIsBool($response->transaccion);
-        $this->assertIsInt($response->codigoRecepcionEventoSignificativo);
-    }
+    //     $response1 = self::$siat1->registroEventoSignificativo(
+    //         self::$cuis1,
+    //         self::$cufd1,
+    //         $eventoSignificativo
+    //     );
+    //     $this->assertIsBool($response1->transaccion);
+    //     $this->assertIsInt($response1->codigoRecepcionEventoSignificativo);
+    // }
 
-    public function testRegistroEventoSignificativo71()
-    {
-        date_default_timezone_set('America/La_Paz');
-        $eventoSignificativo = new EventoSignificativo(
-            7,
-            'CAMBIO DE INFRAESTRUCTURA DEL SISTEMA INFORMÁTICO DE FACTURACIÓN O FALLA DE HARDWARE',
-            date('Y-m-d\TH:i:s.v'),
-            date('Y-m-d\TH:i:s.v', strtotime('+3 hours', strtotime(date("Y-m-d\TH:i:s.v"))))
-        );
-        self::$siat->codigoPuntoVenta = 1;
-        $response = self::$siat->registroEventoSignificativo(
-            self::$cuis,
-            self::$cufd,
-            $eventoSignificativo
-        );
-        $this->assertIsBool($response->transaccion);
-        $this->assertIsInt($response->codigoRecepcionEventoSignificativo);
-    }
+    // public function testRegistroEventoSignificativo7()
+    // {
+    //     $eventoSignificativo = new EventoSignificativo(
+    //         7,
+    //         'CAMBIO DE INFRAESTRUCTURA DEL SISTEMA INFORMÁTICO DE FACTURACIÓN O FALLA DE HARDWARE',
+    //         strtotime('+55 minutes'),
+    //         strtotime('+60 minutes')
+    //     );
+    //     $response0 = self::$siat0->registroEventoSignificativo(
+    //         self::$cuis0,
+    //         self::$cufd0,
+    //         $eventoSignificativo
+    //     );
+    //     $this->assertIsBool($response0->transaccion);
+    //     $this->assertIsInt($response0->codigoRecepcionEventoSignificativo);
+
+    //     $response1 = self::$siat1->registroEventoSignificativo(
+    //         self::$cuis1,
+    //         self::$cufd1,
+    //         $eventoSignificativo
+    //     );
+    //     $this->assertIsBool($response1->transaccion);
+    //     $this->assertIsInt($response1->codigoRecepcionEventoSignificativo);
+    // }
 
     public function testRegistroPuntoVenta()
     {
-        date_default_timezone_set('America/La_Paz');
         $puntoVenta = new PuntoVenta(
             2,
             'nombrePuntoVenta1',
             'descripcion'
         );
-        $response = self::$siat->registroPuntoVenta(
-            self::$cuis,
+        $response0 = self::$siat0->registroPuntoVenta(
+            self::$cuis0,
             $puntoVenta
         );
-        $this->assertIsBool($response->transaccion);
-        $this->assertIsInt($response->codigoPuntoVenta);
+        $this->assertIsBool($response0->transaccion);
+        $this->assertIsInt($response0->codigoPuntoVenta);
     }
 
     public function testConsultaPuntoVenta()
     {
-        $response = self::$siat->consultaPuntoVenta(self::$cuis);
-        $this->assertGreaterThan(0, count($response));
-        $this->assertIsInt($response[0]->codigoPuntoVenta);
-        $this->assertIsString($response[0]->nombrePuntoVenta);
-        $this->assertIsString($response[0]->tipoPuntoVenta);
-    }
-
-    public function testCierrePuntoVenta()
-    {
-        $response = self::$siat->cierrePuntoVenta(self::$cuis);
-        $this->assertIsBool($response->transaccion);
-        $this->assertIsInt($response->codigoPuntoVenta);
-    }
-
-    public function testCierreOperacionesSistema()
-    {
-        $response = self::$siat->cierreOperacionesSistema(self::$cuis);
-        $this->assertIsBool($response->transaccion);
-        $this->assertIsString($response->codigoSistema);
+        $response0 = self::$siat0->consultaPuntoVenta(self::$cuis0);
+        $this->assertGreaterThan(0, count($response0));
+        $this->assertIsInt($response0[0]->codigoPuntoVenta);
+        $this->assertIsString($response0[0]->nombrePuntoVenta);
+        $this->assertIsString($response0[0]->tipoPuntoVenta);
     }
 }
