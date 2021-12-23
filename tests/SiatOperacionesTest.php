@@ -8,28 +8,16 @@ use PHPUnit\Framework\TestCase;
 class SiatOperacionesTest extends TestCase
 {
     private static $siat0;
-    private static $siat1;
     private static $cuis0;
-    private static $cuis1;
     private static $cufd0;
-    private static $cufd1;
 
-    const CODIGO_PUNTO_VENTA = 3;
+    const CODIGO_PUNTO_VENTA = 1;
 
     public static function setUpBeforeClass(): void
     {
-        $credentials = new \stdClass;
-        $credentials->username = $_ENV['SIAT_USER'];
-        $credentials->password = $_ENV['SIAT_PASSWORD'];
-        $auth = new Auth($_ENV['SIAT_NIT'], $credentials);
-        $accessToken = $auth->getAccessToken();
-        self::$siat0 = new Siat($_ENV['SIAT_CODIGO_SISTEMA'], $_ENV['SIAT_NIT'], $accessToken);
-        self::$siat1 = new Siat($_ENV['SIAT_CODIGO_SISTEMA'], $_ENV['SIAT_NIT'], $accessToken);
-        self::$siat1->codigoPuntoVenta = self::CODIGO_PUNTO_VENTA;
+        self::$siat0 = new Siat($_ENV['SIAT_CODIGO_SISTEMA'], $_ENV['SIAT_NIT'], $_ENV['SIAT_API_KEY']);
         self::$cuis0 = self::$siat0->solicitarCUIS()->codigo;
-        self::$cuis1 = self::$siat1->solicitarCUIS()->codigo;
         self::$cufd0 = self::$siat0->solicitarCUFD(self::$cuis0)->codigo;
-        self::$cufd1 = self::$siat1->solicitarCUFD(self::$cuis1)->codigo;
     }
 
     // public function testRegistroEventoSignificativo1()
@@ -47,14 +35,6 @@ class SiatOperacionesTest extends TestCase
     //     );
     //     $this->assertIsBool($response0->transaccion);
     //     $this->assertIsInt($response0->codigoRecepcionEventoSignificativo);
-
-    //     $response1 = self::$siat1->registroEventoSignificativo(
-    //         self::$cuis1,
-    //         self::$cufd1,
-    //         $eventoSignificativo
-    //     );
-    //     $this->assertIsBool($response1->transaccion);
-    //     $this->assertIsInt($response1->codigoRecepcionEventoSignificativo);
     // }
 
     // public function testRegistroEventoSignificativo2()
@@ -70,17 +50,8 @@ class SiatOperacionesTest extends TestCase
     //         self::$cufd0,
     //         $eventoSignificativo
     //     );
-
     //     $this->assertIsBool($response0->transaccion);
     //     $this->assertIsInt($response0->codigoRecepcionEventoSignificativo);
-
-    //     $response1 = self::$siat1->registroEventoSignificativo(
-    //         self::$cuis1,
-    //         self::$cufd1,
-    //         $eventoSignificativo
-    //     );
-    //     $this->assertIsBool($response1->transaccion);
-    //     $this->assertIsInt($response1->codigoRecepcionEventoSignificativo);
     // }
 
     // public function testRegistroEventoSignificativo3()
@@ -98,14 +69,6 @@ class SiatOperacionesTest extends TestCase
     //     );
     //     $this->assertIsBool($response0->transaccion);
     //     $this->assertIsInt($response0->codigoRecepcionEventoSignificativo);
-
-    //     $response1 = self::$siat1->registroEventoSignificativo(
-    //         self::$cuis1,
-    //         self::$cufd1,
-    //         $eventoSignificativo
-    //     );
-    //     $this->assertIsBool($response1->transaccion);
-    //     $this->assertIsInt($response1->codigoRecepcionEventoSignificativo);
     // }
 
     // public function testRegistroEventoSignificativo4()
@@ -123,14 +86,6 @@ class SiatOperacionesTest extends TestCase
     //     );
     //     $this->assertIsBool($response0->transaccion);
     //     $this->assertIsInt($response0->codigoRecepcionEventoSignificativo);
-
-    //     $response1 = self::$siat1->registroEventoSignificativo(
-    //         self::$cuis1,
-    //         self::$cufd1,
-    //         $eventoSignificativo
-    //     );
-    //     $this->assertIsBool($response1->transaccion);
-    //     $this->assertIsInt($response1->codigoRecepcionEventoSignificativo);
     // }
 
     // public function testRegistroEventoSignificativo5()
@@ -148,14 +103,6 @@ class SiatOperacionesTest extends TestCase
     //     );
     //     $this->assertIsBool($response0->transaccion);
     //     $this->assertIsInt($response0->codigoRecepcionEventoSignificativo);
-
-    //     $response1 = self::$siat1->registroEventoSignificativo(
-    //         self::$cuis1,
-    //         self::$cufd1,
-    //         $eventoSignificativo
-    //     );
-    //     $this->assertIsBool($response1->transaccion);
-    //     $this->assertIsInt($response1->codigoRecepcionEventoSignificativo);
     // }
 
     // public function testRegistroEventoSignificativo6()
@@ -173,14 +120,6 @@ class SiatOperacionesTest extends TestCase
     //     );
     //     $this->assertIsBool($response0->transaccion);
     //     $this->assertIsInt($response0->codigoRecepcionEventoSignificativo);
-
-    //     $response1 = self::$siat1->registroEventoSignificativo(
-    //         self::$cuis1,
-    //         self::$cufd1,
-    //         $eventoSignificativo
-    //     );
-    //     $this->assertIsBool($response1->transaccion);
-    //     $this->assertIsInt($response1->codigoRecepcionEventoSignificativo);
     // }
 
     // public function testRegistroEventoSignificativo7()
@@ -198,14 +137,6 @@ class SiatOperacionesTest extends TestCase
     //     );
     //     $this->assertIsBool($response0->transaccion);
     //     $this->assertIsInt($response0->codigoRecepcionEventoSignificativo);
-
-    //     $response1 = self::$siat1->registroEventoSignificativo(
-    //         self::$cuis1,
-    //         self::$cufd1,
-    //         $eventoSignificativo
-    //     );
-    //     $this->assertIsBool($response1->transaccion);
-    //     $this->assertIsInt($response1->codigoRecepcionEventoSignificativo);
     // }
 
     public function testRegistroPuntoVenta()
@@ -226,9 +157,16 @@ class SiatOperacionesTest extends TestCase
     public function testConsultaPuntoVenta()
     {
         $response0 = self::$siat0->consultaPuntoVenta(self::$cuis0);
-        $this->assertGreaterThan(0, count($response0));
-        $this->assertIsInt($response0[0]->codigoPuntoVenta);
-        $this->assertIsString($response0[0]->nombrePuntoVenta);
-        $this->assertIsString($response0[0]->tipoPuntoVenta);
+        $this->assertEquals(true, $response0->transaccion);
+        if (is_array($response0->listaPuntosVentas)) {
+            $this->assertGreaterThan(0, count($response0->listaPuntosVentas));
+            $this->assertIsInt($response0->listaPuntosVentas[0]->codigoPuntoVenta);
+            $this->assertIsString($response0->listaPuntosVentas[0]->nombrePuntoVenta);
+            $this->assertIsString($response0->listaPuntosVentas[0]->tipoPuntoVenta);
+        } else {
+            $this->assertIsInt($response0->listaPuntosVentas->codigoPuntoVenta);
+            $this->assertIsString($response0->listaPuntosVentas->nombrePuntoVenta);
+            $this->assertIsString($response0->listaPuntosVentas->tipoPuntoVenta);
+        }
     }
 }

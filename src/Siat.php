@@ -3,6 +3,7 @@
 namespace Enors\Siat;
 
 use Enors\Siat\Traits\SiatCodigos;
+use Enors\Siat\Traits\SiatFacturacionCompraVenta;
 use Enors\Siat\Traits\SiatSincronizacion;
 use Enors\Siat\Traits\SiatOperaciones;
 use Enors\Siat\Utils\Base16;
@@ -11,8 +12,12 @@ use Enors\Siat\Utils\Module11;
 class Siat
 {
     use SiatCodigos;
+    use SiatFacturacionCompraVenta;
     use SiatSincronizacion;
     use SiatOperaciones;
+
+    const DATE_FORMAT = 'Y-m-d';
+    const DATE_TIME_FORMAT = 'Y-m-d\TH:i:s.v';
 
     const AMBIENTE_PRODUCCION = 1;
     const AMBIENTE_PRUEBA_PILOTO = 2;
@@ -30,10 +35,11 @@ class Siat
 
     const TIPO_DOCUMENTO_SECTOR_FACTURA_COMPRA_VENTA = 1;
 
-    const SIAT_WSDL = 'https://pilotosiatservicios.impuestos.gob.bo/v2/ServicioFacturacionComputarizada?wsdl';
-    const SIAT_CODIGOS_WSDL = 'https://pilotosiatservicios.impuestos.gob.bo/v1/FacturacionCodigos?wsdl';
-    const SIAT_SINCRONIZACION_WSDL = 'https://pilotosiatservicios.impuestos.gob.bo/v1/FacturacionSincronizacion?wsdl';
-    const SIAT_OPERACIONES_WSDL = 'https://pilotosiatservicios.impuestos.gob.bo/v1/FacturacionOperaciones?wsdl';
+    const SIAT_FACTURACION_COMPRA_VENTA_WSDL =
+        'https://pilotosiatservicios.impuestos.gob.bo/v2/ServicioFacturacionCompraVenta?wsdl';
+    const SIAT_CODIGOS_WSDL = 'https://pilotosiatservicios.impuestos.gob.bo/v2/FacturacionCodigos?wsdl';
+    const SIAT_SINCRONIZACION_WSDL = 'https://pilotosiatservicios.impuestos.gob.bo/v2/FacturacionSincronizacion?wsdl';
+    const SIAT_OPERACIONES_WSDL = 'https://pilotosiatservicios.impuestos.gob.bo/v2/FacturacionOperaciones?wsdl';
 
     public function __construct(
         string $codigoSistema,

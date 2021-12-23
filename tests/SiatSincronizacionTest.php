@@ -8,24 +8,14 @@ use PHPUnit\Framework\TestCase;
 class SiatSincronizacionTest extends TestCase
 {
     private static $siat0;
-    private static $siat1;
     private static $cuis0;
-    private static $cuis1;
 
-    const CODIGO_PUNTO_VENTA = 3;
+    const CODIGO_PUNTO_VENTA = 1;
 
     public static function setUpBeforeClass(): void
     {
-        $credentials = new \stdClass;
-        $credentials->username = $_ENV['SIAT_USER'];
-        $credentials->password = $_ENV['SIAT_PASSWORD'];
-        $auth = new Auth($_ENV['SIAT_NIT'], $credentials);
-        $accessToken = $auth->getAccessToken();
-        self::$siat0 = new Siat($_ENV['SIAT_CODIGO_SISTEMA'], $_ENV['SIAT_NIT'], $accessToken);
-        self::$siat1 = new Siat($_ENV['SIAT_CODIGO_SISTEMA'], $_ENV['SIAT_NIT'], $accessToken);
-        self::$siat1->codigoPuntoVenta = self::CODIGO_PUNTO_VENTA;
+        self::$siat0 = new Siat($_ENV['SIAT_CODIGO_SISTEMA'], $_ENV['SIAT_NIT'], $_ENV['SIAT_API_KEY']);
         self::$cuis0 = self::$siat0->solicitarCUIS()->codigo;
-        self::$cuis1 = self::$siat1->solicitarCUIS()->codigo;
     }
 
     public function testSincronizarActividades()
@@ -34,11 +24,6 @@ class SiatSincronizacionTest extends TestCase
         $this->assertGreaterThan(0, count($response0));
         $this->assertNotEmpty($response0[0]->codigoCaeb);
         $this->assertNotEmpty($response0[0]->descripcion);
-
-        $response1 = self::$siat1->sincronizarActividades(self::$cuis1);
-        $this->assertGreaterThan(0, count($response1));
-        $this->assertNotEmpty($response1[0]->codigoCaeb);
-        $this->assertNotEmpty($response1[0]->descripcion);
     }
 
     public function testSincronizarFechaHora()
@@ -46,10 +31,6 @@ class SiatSincronizacionTest extends TestCase
         $fechaHora0 = self::$siat0->sincronizarFechaHora(self::$cuis0);
         $this->assertIsString($fechaHora0);
         $this->assertNotEmpty($fechaHora0);
-
-        $fechaHora1 = self::$siat1->sincronizarFechaHora(self::$cuis1);
-        $this->assertIsString($fechaHora1);
-        $this->assertNotEmpty($fechaHora1);
     }
 
     public function testSincronizarActividadesDocumentoSector()
@@ -59,12 +40,6 @@ class SiatSincronizacionTest extends TestCase
         $this->assertNotEmpty($response0[0]->codigoActividad);
         $this->assertIsInt($response0[0]->codigoDocumentoSector);
         $this->assertNotEmpty($response0[0]->tipoDocumentoSector);
-
-        $response1 = self::$siat1->sincronizarActividadesDocumentoSector(self::$cuis1);
-        $this->assertGreaterThan(0, count($response1));
-        $this->assertNotEmpty($response1[0]->codigoActividad);
-        $this->assertIsInt($response1[0]->codigoDocumentoSector);
-        $this->assertNotEmpty($response1[0]->tipoDocumentoSector);
     }
 
     public function testSincronizarListaLeyendasFactura()
@@ -73,11 +48,6 @@ class SiatSincronizacionTest extends TestCase
         $this->assertGreaterThan(0, count($response0));
         $this->assertIsString($response0[0]->codigoActividad);
         $this->assertIsString($response0[0]->descripcionLeyenda);
-
-        $response1 = self::$siat1->sincronizarListaLeyendasFactura(self::$cuis1);
-        $this->assertGreaterThan(0, count($response1));
-        $this->assertIsString($response1[0]->codigoActividad);
-        $this->assertIsString($response1[0]->descripcionLeyenda);
     }
 
     public function testSincronizarListaMensajesServicios()
@@ -86,11 +56,6 @@ class SiatSincronizacionTest extends TestCase
         $this->assertGreaterThan(0, count($response0));
         $this->assertIsInt($response0[0]->codigoClasificador);
         $this->assertIsString($response0[0]->descripcion);
-
-        $response1 = self::$siat1->sincronizarListaMensajesServicios(self::$cuis1);
-        $this->assertGreaterThan(0, count($response1));
-        $this->assertIsInt($response1[0]->codigoClasificador);
-        $this->assertIsString($response1[0]->descripcion);
     }
 
     public function testSincronizarParametricaListaProductosServicios()
@@ -100,12 +65,6 @@ class SiatSincronizacionTest extends TestCase
         $this->assertIsString($response0[0]->codigoActividad);
         $this->assertIsInt($response0[0]->codigoProducto);
         $this->assertIsString($response0[0]->descripcionProducto);
-
-        $response1 = self::$siat1->sincronizarParametricaListaProductosServicios(self::$cuis1);
-        $this->assertGreaterThan(0, count($response1));
-        $this->assertIsString($response1[0]->codigoActividad);
-        $this->assertIsInt($response1[0]->codigoProducto);
-        $this->assertIsString($response1[0]->descripcionProducto);
     }
 
     public function testSincronizarParametricaEventosSignificativos()
@@ -114,11 +73,6 @@ class SiatSincronizacionTest extends TestCase
         $this->assertGreaterThan(0, count($response0));
         $this->assertIsInt($response0[0]->codigoClasificador);
         $this->assertIsString($response0[0]->descripcion);
-
-        $response1 = self::$siat1->sincronizarParametricaEventosSignificativos(self::$cuis1);
-        $this->assertGreaterThan(0, count($response1));
-        $this->assertIsInt($response1[0]->codigoClasificador);
-        $this->assertIsString($response1[0]->descripcion);
     }
 
     public function testSincronizarParametricaMotivoAnulacion()
@@ -127,11 +81,6 @@ class SiatSincronizacionTest extends TestCase
         $this->assertGreaterThan(0, count($response0));
         $this->assertIsInt($response0[0]->codigoClasificador);
         $this->assertIsString($response0[0]->descripcion);
-
-        $response1 = self::$siat1->sincronizarParametricaMotivoAnulacion(self::$cuis1);
-        $this->assertGreaterThan(0, count($response1));
-        $this->assertIsInt($response1[0]->codigoClasificador);
-        $this->assertIsString($response1[0]->descripcion);
     }
 
     public function testSincronizarParametricaPaisOrigen()
@@ -140,11 +89,6 @@ class SiatSincronizacionTest extends TestCase
         $this->assertGreaterThan(0, count($response0));
         $this->assertIsInt($response0[0]->codigoClasificador);
         $this->assertIsString($response0[0]->descripcion);
-
-        $response1 = self::$siat1->sincronizarParametricaPaisOrigen(self::$cuis1);
-        $this->assertGreaterThan(0, count($response1));
-        $this->assertIsInt($response1[0]->codigoClasificador);
-        $this->assertIsString($response1[0]->descripcion);
     }
 
     public function testSincronizarParametricaTipoDocumentoIdentidad()
@@ -153,11 +97,6 @@ class SiatSincronizacionTest extends TestCase
         $this->assertGreaterThan(0, count($response0));
         $this->assertIsInt($response0[0]->codigoClasificador);
         $this->assertIsString($response0[0]->descripcion);
-
-        $response1 = self::$siat1->sincronizarParametricaTipoDocumentoIdentidad(self::$cuis1);
-        $this->assertGreaterThan(0, count($response1));
-        $this->assertIsInt($response1[0]->codigoClasificador);
-        $this->assertIsString($response1[0]->descripcion);
     }
 
     public function testSincronizarParametricaTipoDocumentoSector()
@@ -166,11 +105,6 @@ class SiatSincronizacionTest extends TestCase
         $this->assertGreaterThan(0, count($response0));
         $this->assertIsInt($response0[0]->codigoClasificador);
         $this->assertIsString($response0[0]->descripcion);
-
-        $response1 = self::$siat1->sincronizarParametricaTipoDocumentoSector(self::$cuis1);
-        $this->assertGreaterThan(0, count($response1));
-        $this->assertIsInt($response1[0]->codigoClasificador);
-        $this->assertIsString($response1[0]->descripcion);
     }
 
     public function testSincronizarParametricaTipoEmision()
@@ -179,11 +113,6 @@ class SiatSincronizacionTest extends TestCase
         $this->assertGreaterThan(0, count($response0));
         $this->assertIsInt($response0[0]->codigoClasificador);
         $this->assertIsString($response0[0]->descripcion);
-
-        $response1 = self::$siat1->sincronizarParametricaTipoEmision(self::$cuis1);
-        $this->assertGreaterThan(0, count($response1));
-        $this->assertIsInt($response1[0]->codigoClasificador);
-        $this->assertIsString($response1[0]->descripcion);
     }
 
     public function testSincronizarParametricaTipoHabitacion()
@@ -192,11 +121,6 @@ class SiatSincronizacionTest extends TestCase
         $this->assertGreaterThan(0, count($response0));
         $this->assertIsInt($response0[0]->codigoClasificador);
         $this->assertIsString($response0[0]->descripcion);
-
-        $response1 = self::$siat1->sincronizarParametricaTipoHabitacion(self::$cuis1);
-        $this->assertGreaterThan(0, count($response1));
-        $this->assertIsInt($response1[0]->codigoClasificador);
-        $this->assertIsString($response1[0]->descripcion);
     }
 
     public function testSincronizarParametricaTipoMetodoPago()
@@ -205,11 +129,6 @@ class SiatSincronizacionTest extends TestCase
         $this->assertGreaterThan(0, count($response0));
         $this->assertIsInt($response0[0]->codigoClasificador);
         $this->assertIsString($response0[0]->descripcion);
-
-        $response1 = self::$siat1->sincronizarParametricaTipoMetodoPago(self::$cuis1);
-        $this->assertGreaterThan(0, count($response1));
-        $this->assertIsInt($response1[0]->codigoClasificador);
-        $this->assertIsString($response1[0]->descripcion);
     }
 
     public function testSincronizarParametricaTipoMoneda()
@@ -218,11 +137,6 @@ class SiatSincronizacionTest extends TestCase
         $this->assertGreaterThan(0, count($response0));
         $this->assertIsInt($response0[0]->codigoClasificador);
         $this->assertIsString($response0[0]->descripcion);
-
-        $response1 = self::$siat1->sincronizarParametricaTipoMoneda(self::$cuis1);
-        $this->assertGreaterThan(0, count($response1));
-        $this->assertIsInt($response1[0]->codigoClasificador);
-        $this->assertIsString($response1[0]->descripcion);
     }
 
     public function testSincronizarParametricaTipoPuntoVenta()
@@ -231,11 +145,6 @@ class SiatSincronizacionTest extends TestCase
         $this->assertGreaterThan(0, count($response0));
         $this->assertIsInt($response0[0]->codigoClasificador);
         $this->assertIsString($response0[0]->descripcion);
-
-        $response1 = self::$siat1->sincronizarParametricaTipoPuntoVenta(self::$cuis1);
-        $this->assertGreaterThan(0, count($response1));
-        $this->assertIsInt($response1[0]->codigoClasificador);
-        $this->assertIsString($response1[0]->descripcion);
     }
 
     public function testSincronizarParametricaTiposFactura()
@@ -244,11 +153,6 @@ class SiatSincronizacionTest extends TestCase
         $this->assertGreaterThan(0, count($response0));
         $this->assertIsInt($response0[0]->codigoClasificador);
         $this->assertIsString($response0[0]->descripcion);
-
-        $response1 = self::$siat1->sincronizarParametricaTiposFactura(self::$cuis1);
-        $this->assertGreaterThan(0, count($response1));
-        $this->assertIsInt($response1[0]->codigoClasificador);
-        $this->assertIsString($response1[0]->descripcion);
     }
 
     public function testSincronizarParametricaUnidadMedida()
@@ -257,10 +161,5 @@ class SiatSincronizacionTest extends TestCase
         $this->assertGreaterThan(0, count($response0));
         $this->assertIsInt($response0[0]->codigoClasificador);
         $this->assertIsString($response0[0]->descripcion);
-
-        $response1 = self::$siat1->sincronizarParametricaUnidadMedida(self::$cuis1);
-        $this->assertGreaterThan(0, count($response1));
-        $this->assertIsInt($response1[0]->codigoClasificador);
-        $this->assertIsString($response1[0]->descripcion);
     }
 }

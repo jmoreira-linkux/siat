@@ -45,6 +45,7 @@ jobs:
         SIAT_NIT: ${{ secrets.SIAT_NIT }}
         SIAT_USER: ${{ secrets.SIAT_USER }}
         SIAT_PASSWORD: ${{ secrets.SIAT_PASSWORD }}
+        SIAT_API_KEY: ${{ secrets.SIAT_API_KEY }}
       run: composer run-script test
 
     - name: Run code sniffer
