@@ -7,6 +7,8 @@
 	<testsuites>
 		<testsuite name="Siat Test Suite">
 			<directory>tests</directory>
+			<exclude>./tests/SiatVTest.php</exclude>
+			<exclude>./tests/SiatFacturacionComputarizada.php</exclude>
 		</testsuite>
 	</testsuites>
 	<coverage processUncoveredFiles="true">

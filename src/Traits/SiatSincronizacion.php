@@ -9,7 +9,7 @@ trait SiatSincronizacion
         if (!isset($this->sincronizacionClient)) {
             $opts = [
                 'http' => [
-                    'header' => 'Authorization: Token ' . $this->token
+                    'header' => 'apiKey: TokenApi ' . $this->token
                 ]
             ];
             $context = stream_context_create($opts);

@@ -9,7 +9,7 @@ trait SiatCodigos
         if (!isset($this->codigosClient)) {
             $opts = [
                 'http' => [
-                    'header' => 'Authorization: Token ' . $this->token
+                    'header' => 'apiKey: TokenApi ' . $this->token
                 ]
             ];
             $context = stream_context_create($opts);
@@ -21,8 +21,8 @@ trait SiatCodigos
     public function solicitarCUIS()
     {
         $client = $this->getCodigosClient();
-        $response = $client->solicitudCuis([
-            'SolicitudOperacionesCuis' => [
+        $response = $client->cuis([
+            'SolicitudCuis' => [
                 'codigoAmbiente' => $this->codigoAmbiente,
                 'codigoSistema' => $this->codigoSistema,
                 'nit' => $this->nit,
@@ -37,8 +37,8 @@ trait SiatCodigos
     public function solicitarCUFD(string $cuis)
     {
         $client = $this->getCodigosClient();
-        $response = $client->solicitudCufd([
-            'SolicitudOperaciones' => [
+        $response = $client->cufd([
+            'SolicitudCufd' => [
                 'codigoAmbiente' => $this->codigoAmbiente,
                 'codigoSistema' => $this->codigoSistema,
                 'nit' => $this->nit,

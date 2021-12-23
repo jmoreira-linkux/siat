@@ -12,7 +12,7 @@ trait SiatOperaciones
         if (!isset($this->operacionesClient)) {
             $opts = [
                 'http' => [
-                    'header' => 'Authorization: Token ' . $this->token
+                    'header' => 'apiKey: TokenApi ' . $this->token
                 ]
             ];
             $context = stream_context_create($opts);
@@ -55,8 +55,8 @@ trait SiatOperaciones
                 'codigoPuntoVenta' => $this->codigoPuntoVenta,
                 'codigoMotivoEvento' => $eventoSignificativo->codigoEvento,
                 'descripcion' => $eventoSignificativo->descripcion,
-                'fechaHoraInicioEvento' => date('Y-m-d\TH:i:s.v', $eventoSignificativo->fechaInicioEvento),
-                'fechaHoraFinEvento' => date('Y-m-d\TH:i:s.v', $eventoSignificativo->fechaFinEvento),
+                'fechaHoraInicioEvento' => date(self::DATE_TIME_FORMAT, $eventoSignificativo->fechaInicioEvento),
+                'fechaHoraFinEvento' => date(self::DATE_TIME_FORMAT, $eventoSignificativo->fechaFinEvento),
                 'cufdEvento' => $cufd
             ],
         ]);
@@ -94,7 +94,7 @@ trait SiatOperaciones
                 'nit' => $this->nit,
             ],
         ]);
-        return $response->RespuestaConsultaPuntoVenta->listaPuntosVentas;
+        return $response->RespuestaConsultaPuntoVenta;
     }
 
     public function cierrePuntoVenta(string $cuis)
