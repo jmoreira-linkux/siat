@@ -112,4 +112,27 @@ trait SiatFacturacionCompraVenta
         ]);
         return $response->RespuestaServicioFacturacion;
     }
+
+    public function anulacionFactura(string $cuis, string $cufd, string $cuf, int $codigoMotivo)
+    {
+        $client = $this->getFacturacionComputarizadaClient();
+        $response = $client->anulacionFactura([
+            'SolicitudServicioAnulacionFactura' => [
+                'codigoAmbiente' => $this->codigoAmbiente,
+                'codigoPuntoVenta' => $this->codigoPuntoVenta,
+                'codigoSistema' => $this->codigoSistema,
+                'codigoSucursal' => $this->codigoSucursal,
+                'nit' => $this->nit,
+                'codigoDocumentoSector' => self::TIPO_DOCUMENTO_SECTOR_FACTURA_COMPRA_VENTA,
+                'codigoEmision' => self::TIPO_EMISION_ONLINE,
+                'codigoModalidad' => $this->codigoModalidad,
+                'cufd' => $cufd,
+                'cuis' => $cuis,
+                'tipoFacturaDocumento' => self::TIPO_FACTURA_CON_DERECHO_CREDITO_FISCAL,
+                'codigoMotivo' => $codigoMotivo,
+                'cuf' => $cuf,
+            ]
+        ]);
+        return $response->RespuestaServicioFacturacion;
+    }
 }
