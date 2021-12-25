@@ -20,124 +20,149 @@ class SiatOperacionesTest extends TestCase
         self::$cufd0 = self::$siat0->solicitarCUFD(self::$cuis0)->codigo;
     }
 
-    // public function testRegistroEventoSignificativo1()
+    // public function testConsultaEventoSignificativo()
     // {
-    //     $eventoSignificativo = new EventoSignificativo(
-    //         1,
-    //         'CORTE DEL SERVICIO DE INTERNET',
-    //         time(),
-    //         strtotime('+5 minutes')
-    //     );
-    //     $response0 = self::$siat0->registroEventoSignificativo(
+    //     date_default_timezone_set('America/La_Paz');
+    //     $response0 = self::$siat0->consultaEventoSignificativo(
     //         self::$cuis0,
     //         self::$cufd0,
-    //         $eventoSignificativo
+    //         time()
     //     );
-    //     $this->assertIsBool($response0->transaccion);
-    //     $this->assertIsInt($response0->codigoRecepcionEventoSignificativo);
+    //     var_dump($response0->RespuestaListaEventos->listaCodigos);
     // }
 
-    // public function testRegistroEventoSignificativo2()
-    // {
-    //     $eventoSignificativo = new EventoSignificativo(
-    //         2,
-    //         'INACCESIBILIDAD AL SERVICIO WEB DE LA ADMINISTRACIÓN TRIBUTARIA',
-    //         strtotime('+5 minutes'),
-    //         strtotime('+10 minutes')
-    //     );
-    //     $response0 = self::$siat0->registroEventoSignificativo(
-    //         self::$cuis0,
-    //         self::$cufd0,
-    //         $eventoSignificativo
-    //     );
-    //     $this->assertIsBool($response0->transaccion);
-    //     $this->assertIsInt($response0->codigoRecepcionEventoSignificativo);
-    // }
+    public function testRegistroEventoSignificativo1()
+    {
+        date_default_timezone_set('America/La_Paz');
+        $eventoSignificativo = new EventoSignificativo(
+            1,
+            'CORTE DEL SERVICIO DE INTERNET',
+            time(),
+            strtotime('+5 seconds')
+        );
+        $response0 = self::$siat0->registroEventoSignificativo(
+            self::$cuis0,
+            self::$cufd0,
+            $eventoSignificativo
+        );
+        $this->assertIsBool($response0->transaccion);
+        $this->assertIsInt($response0->codigoRecepcionEventoSignificativo);
+        sleep(6);
+    }
 
-    // public function testRegistroEventoSignificativo3()
-    // {
-    //     $eventoSignificativo = new EventoSignificativo(
-    //         3,
-    //         'INGRESO A ZONAS SIN INTERNET POR DESPLIEGUE DE PUNTO DE VENTA EN VEHICULOS AUTOMOTORES',
-    //         strtotime('+15 minutes'),
-    //         strtotime('+20 minutes')
-    //     );
-    //     $response0 = self::$siat0->registroEventoSignificativo(
-    //         self::$cuis0,
-    //         self::$cufd0,
-    //         $eventoSignificativo
-    //     );
-    //     $this->assertIsBool($response0->transaccion);
-    //     $this->assertIsInt($response0->codigoRecepcionEventoSignificativo);
-    // }
+    public function testRegistroEventoSignificativo2()
+    {
+        date_default_timezone_set('America/La_Paz');
+        $eventoSignificativo = new EventoSignificativo(
+            2,
+            'INACCESIBILIDAD AL SERVICIO WEB DE LA ADMINISTRACIÓN TRIBUTARIA',
+            time(),
+            strtotime('+5 seconds')
+        );
+        $response0 = self::$siat0->registroEventoSignificativo(
+            self::$cuis0,
+            self::$cufd0,
+            $eventoSignificativo
+        );
+        $this->assertIsBool($response0->transaccion);
+        $this->assertIsInt($response0->codigoRecepcionEventoSignificativo);
+        sleep(6);
+    }
 
-    // public function testRegistroEventoSignificativo4()
-    // {
-    //     $eventoSignificativo = new EventoSignificativo(
-    //         4,
-    //         'VENTA EN LUGARES SIN INTERNET',
-    //         strtotime('+25 minutes'),
-    //         strtotime('+30 minutes')
-    //     );
-    //     $response0 = self::$siat0->registroEventoSignificativo(
-    //         self::$cuis0,
-    //         self::$cufd0,
-    //         $eventoSignificativo
-    //     );
-    //     $this->assertIsBool($response0->transaccion);
-    //     $this->assertIsInt($response0->codigoRecepcionEventoSignificativo);
-    // }
+    public function testRegistroEventoSignificativo3()
+    {
+        date_default_timezone_set('America/La_Paz');
+        $eventoSignificativo = new EventoSignificativo(
+            3,
+            'INGRESO A ZONAS SIN INTERNET POR DESPLIEGUE DE PUNTO DE VENTA EN VEHICULOS AUTOMOTORES',
+            time(),
+            strtotime('+5 seconds')
+        );
+        $response0 = self::$siat0->registroEventoSignificativo(
+            self::$cuis0,
+            self::$cufd0,
+            $eventoSignificativo
+        );
+        $this->assertIsBool($response0->transaccion);
+        $this->assertIsInt($response0->codigoRecepcionEventoSignificativo);
+        sleep(6);
+    }
 
-    // public function testRegistroEventoSignificativo5()
-    // {
-    //     $eventoSignificativo = new EventoSignificativo(
-    //         5,
-    //         'CORTE DE SUMINISTRO DE ENERGIA ELECTRICA',
-    //         strtotime('+35 minutes'),
-    //         strtotime('+40 minutes')
-    //     );
-    //     $response0 = self::$siat0->registroEventoSignificativo(
-    //         self::$cuis0,
-    //         self::$cufd0,
-    //         $eventoSignificativo
-    //     );
-    //     $this->assertIsBool($response0->transaccion);
-    //     $this->assertIsInt($response0->codigoRecepcionEventoSignificativo);
-    // }
+    public function testRegistroEventoSignificativo4()
+    {
+        date_default_timezone_set('America/La_Paz');
+        $eventoSignificativo = new EventoSignificativo(
+            4,
+            'VENTA EN LUGARES SIN INTERNET',
+            time(),
+            strtotime('+5 seconds')
+        );
+        $response0 = self::$siat0->registroEventoSignificativo(
+            self::$cuis0,
+            self::$cufd0,
+            $eventoSignificativo
+        );
+        $this->assertIsBool($response0->transaccion);
+        $this->assertIsInt($response0->codigoRecepcionEventoSignificativo);
+        sleep(6);
+    }
 
-    // public function testRegistroEventoSignificativo6()
-    // {
-    //     $eventoSignificativo = new EventoSignificativo(
-    //         6,
-    //         'VIRUS INFORMÁTICO O FALLA DE SOFTWARE',
-    //         strtotime('+45 minutes'),
-    //         strtotime('+50 minutes')
-    //     );
-    //     $response0 = self::$siat0->registroEventoSignificativo(
-    //         self::$cuis0,
-    //         self::$cufd0,
-    //         $eventoSignificativo
-    //     );
-    //     $this->assertIsBool($response0->transaccion);
-    //     $this->assertIsInt($response0->codigoRecepcionEventoSignificativo);
-    // }
+    public function testRegistroEventoSignificativo5()
+    {
+        date_default_timezone_set('America/La_Paz');
+        $eventoSignificativo = new EventoSignificativo(
+            5,
+            'CORTE DE SUMINISTRO DE ENERGIA ELECTRICA',
+            time(),
+            strtotime('+5 seconds')
+        );
+        $response0 = self::$siat0->registroEventoSignificativo(
+            self::$cuis0,
+            self::$cufd0,
+            $eventoSignificativo
+        );
+        $this->assertIsBool($response0->transaccion);
+        $this->assertIsInt($response0->codigoRecepcionEventoSignificativo);
+        sleep(6);
+    }
 
-    // public function testRegistroEventoSignificativo7()
-    // {
-    //     $eventoSignificativo = new EventoSignificativo(
-    //         7,
-    //         'CAMBIO DE INFRAESTRUCTURA DEL SISTEMA INFORMÁTICO DE FACTURACIÓN O FALLA DE HARDWARE',
-    //         strtotime('+55 minutes'),
-    //         strtotime('+60 minutes')
-    //     );
-    //     $response0 = self::$siat0->registroEventoSignificativo(
-    //         self::$cuis0,
-    //         self::$cufd0,
-    //         $eventoSignificativo
-    //     );
-    //     $this->assertIsBool($response0->transaccion);
-    //     $this->assertIsInt($response0->codigoRecepcionEventoSignificativo);
-    // }
+    public function testRegistroEventoSignificativo6()
+    {
+        date_default_timezone_set('America/La_Paz');
+        $eventoSignificativo = new EventoSignificativo(
+            6,
+            'VIRUS INFORMÁTICO O FALLA DE SOFTWARE',
+            time(),
+            strtotime('+5 seconds')
+        );
+        $response0 = self::$siat0->registroEventoSignificativo(
+            self::$cuis0,
+            self::$cufd0,
+            $eventoSignificativo
+        );
+        $this->assertIsBool($response0->transaccion);
+        $this->assertIsInt($response0->codigoRecepcionEventoSignificativo);
+        sleep(6);
+    }
+
+    public function testRegistroEventoSignificativo7()
+    {
+        date_default_timezone_set('America/La_Paz');
+        $eventoSignificativo = new EventoSignificativo(
+            7,
+            'CAMBIO DE INFRAESTRUCTURA DEL SISTEMA INFORMÁTICO DE FACTURACIÓN O FALLA DE HARDWARE',
+            time(),
+            strtotime('+5 seconds')
+        );
+        $response0 = self::$siat0->registroEventoSignificativo(
+            self::$cuis0,
+            self::$cufd0,
+            $eventoSignificativo
+        );
+        $this->assertIsBool($response0->transaccion);
+        $this->assertIsInt($response0->codigoRecepcionEventoSignificativo);
+        sleep(6);
+    }
 
     public function testRegistroPuntoVenta()
     {
