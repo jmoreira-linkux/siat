@@ -178,4 +178,81 @@ class SiatFacturacionComputarizadaTest extends TestCase
         );
         $this->assertEquals(true, $response0->transaccion);
     }
+
+    public function testAnulacionFacturaCompraVenta()
+    {
+        date_default_timezone_set('America/La_Paz');
+
+        $faker = \Faker\Factory::create();
+
+        $facturaCompraVenta = new FacturaCompraVenta();
+        $facturaCompraVenta->nitEmisor = 346141028;
+        $facturaCompraVenta->razonSocialEmisor = 'Carlos Loza';
+        $facturaCompraVenta->municipio = 'La Paz';
+        $facturaCompraVenta->telefono = '78595684';
+        $facturaCompraVenta->numeroFactura = $faker->unique()->randomNumber(8);
+        $facturaCompraVenta->codigoSucursal = 0;
+        $facturaCompraVenta->direccion = 'AV. JORGE LOPEZ #123';
+        $facturaCompraVenta->codigoPuntoVenta = 0;
+        $facturaCompraVenta->fechaEmision = time();
+        $facturaCompraVenta->nombreRazonSocial = 'Mi razon social';
+        $facturaCompraVenta->codigoTipoDocumentoIdentidad = 1;
+        $facturaCompraVenta->numeroDocumento = '5115889';
+        $facturaCompraVenta->complemento = null;
+        $facturaCompraVenta->codigoCliente = '51158891';
+        $facturaCompraVenta->codigoMetodoPago = 1;
+        $facturaCompraVenta->numeroTarjeta = null;
+        $facturaCompraVenta->montoTotal = 100;
+        $facturaCompraVenta->montoTotalSujetoIva = 100;
+        $facturaCompraVenta->codigoMoneda = 1;
+        $facturaCompraVenta->tipoCambio = 1;
+        $facturaCompraVenta->montoTotalMoneda = 100;
+        $facturaCompraVenta->montoGiftCard = null;
+        $facturaCompraVenta->descuentoAdicional = 0;
+        $facturaCompraVenta->codigoExcepcion = null;
+        $facturaCompraVenta->cafc = null;
+        $facturaCompraVenta->leyenda = 'Ley N° 453: El proveedor deberá suministrar el servicio en las modalidades y ' .
+            'términos ofertados o convenidos.';
+        $facturaCompraVenta->usuario = 'pperez';
+        $facturaCompraVenta->codigoDocumentoSector = 1;
+
+        $detalle = new FacturaCompraVentaDetalle();
+        $detalle->actividadEconomica = '620000';
+        $detalle->codigoProductoSin = 47813;
+        $detalle->codigoProducto = '47813';
+        $detalle->descripcion = 'PAQUETE DE SOFTWARE DE ADMINISTRACIÓN DE BASE DE DATOS';
+        $detalle->cantidad = 1;
+        $detalle->unidadMedida = 1;
+        $detalle->precioUnitario = 100;
+        $detalle->montoDescuento = 0;
+        $detalle->subTotal = 100;
+        $detalle->numeroSerie = null;
+        $detalle->numeroImei = null;
+
+        $facturaCompraVenta->agregarLinea($detalle);
+
+        $cuf = self::$siat0->generarCUF(
+            $facturaCompraVenta->fechaEmision,
+            $facturaCompraVenta->numeroFactura,
+            self::$cufd0->codigoControl
+        );
+        $facturaCompraVenta->cuf = $cuf;
+        $facturaCompraVenta->cufd = self::$cufd0->codigo;
+
+        $response0 = self::$siat0->recepcionFacturaCompraVenta(
+            self::$cuis0,
+            self::$cufd0->codigo,
+            $facturaCompraVenta
+        );
+
+        $response1 = self::$siat0->anulacionFactura(
+            self::$cuis0,
+            self::$cufd0->codigo,
+            $cuf,
+            1,
+        );
+
+        $this->assertEquals(905, $response1->codigoEstado);
+        $this->assertEquals(true, $response1->transaccion);
+    }
 }
