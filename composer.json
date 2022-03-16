@@ -14,7 +14,6 @@
             "email": "jmoreira@linkux-it.com"
         }
     ],
-    "minimum-stability": "dev",
     "require-dev": {
         "phpunit/phpunit": "9.5.x-dev",
         "fzaninotto/faker": "1.9.x-dev",
@@ -23,7 +22,7 @@
     },
     "require": {
         "php": "^7.0",
-        "kingson-de/marshal-xml-serializer": "dev-master"
+        "kingson-de/marshal-xml-serializer": "^1.2.1"
     },
     "scripts": {
         "lint": "phpcs",
