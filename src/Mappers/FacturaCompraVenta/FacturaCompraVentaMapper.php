@@ -1,8 +1,9 @@
 <?php
 
-namespace Enors\Siat\Mappers;
+namespace Enors\Siat\Mappers\FacturaCompraVenta;
 
-use Enors\Siat\Facturas\FacturaCompraVenta;
+use Enors\Siat\Facturas\CompraVenta\FacturaCompraVenta;
+use Enors\Siat\Mappers\AbstractMapper;
 
 class FacturaCompraVentaMapper extends AbstractMapper
 {

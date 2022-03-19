@@ -1,9 +1,10 @@
 <?php
 
-namespace Enors\Siat\Mappers;
+namespace Enors\Siat\Mappers\FacturaCompraVenta;
 
-use Enors\Siat\Facturas\FacturaCompraVenta;
-use Enors\Siat\Siat;
+use Enors\Siat\Facturas\CompraVenta\FacturaCompraVenta;
+use Enors\Siat\Mappers\AbstractMapper;
+use Enors\Siat\SiatConstants;
 
 class FacturaCompraVentaCabeceraMapper extends AbstractMapper
 {
@@ -15,12 +16,12 @@ class FacturaCompraVentaCabeceraMapper extends AbstractMapper
             'municipio' => $factura->municipio,
             'telefono' => isset($factura->telefono) ? $factura->telefono : $this->nil(),
             'numeroFactura' => $factura->numeroFactura,
-            'cuf' => $factura->cuf,
-            'cufd' => $factura->cufd,
+            'cuf' => $factura->getCuf(),
+            'cufd' => $factura->getCufd(),
             'codigoSucursal' => $factura->codigoSucursal,
             'direccion' => $factura->direccion,
             'codigoPuntoVenta' => isset($factura->codigoPuntoVenta) ? $factura->codigoPuntoVenta : $this->nil(),
-            'fechaEmision' => date(Siat::DATE_TIME_FORMAT, $factura->fechaEmision),
+            'fechaEmision' => date(SiatConstants::DATE_TIME_FORMAT, $factura->fechaEmision),
             'nombreRazonSocial' => isset($factura->nombreRazonSocial) ? $factura->nombreRazonSocial : $this->nil(),
             'codigoTipoDocumentoIdentidad' => $factura->codigoTipoDocumentoIdentidad,
             'numeroDocumento' => $factura->numeroDocumento,
@@ -39,7 +40,7 @@ class FacturaCompraVentaCabeceraMapper extends AbstractMapper
             'cafc' => isset($factura->cafc) ? $factura->cafc : $this->nil(),
             'leyenda' => $factura->leyenda,
             'usuario' => $factura->usuario,
-            'codigoDocumentoSector' => $factura->codigoDocumentoSector,
+            'codigoDocumentoSector' => $factura->getCodigoDocumentoSector(),
         ];
     }
 }

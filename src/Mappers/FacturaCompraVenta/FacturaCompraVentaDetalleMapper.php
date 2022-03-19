@@ -1,10 +1,13 @@
 <?php
 
-namespace Enors\Siat\Mappers;
+namespace Enors\Siat\Mappers\FacturaCompraVenta;
+
+use Enors\Siat\Facturas\CompraVenta\FacturaCompraVentaDetalle;
+use Enors\Siat\Mappers\AbstractMapper;
 
 class FacturaCompraVentaDetalleMapper extends AbstractMapper
 {
-    public function map($detalle)
+    public function map(FacturaCompraVentaDetalle $detalle)
     {
         $map = [
             'actividadEconomica' => $detalle->actividadEconomica,

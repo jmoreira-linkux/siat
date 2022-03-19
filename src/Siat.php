@@ -9,6 +9,9 @@ use Enors\Siat\Traits\SiatOperaciones;
 use Enors\Siat\Utils\Base16;
 use Enors\Siat\Utils\Module11;
 
+/**
+ * @deprecated
+ */
 class Siat
 {
     use SiatCodigos;
@@ -59,6 +62,16 @@ class Siat
         $this->codigoPuntoVenta = $codigoPuntoVenta;
     }
 
+    /**
+     * @deprecated
+     * @param  int         $timestamp           [description]
+     * @param  int         $nroFactura          [description]
+     * @param  string      $cufd                [description]
+     * @param  int|integer $tipoEmision         [description]
+     * @param  int|integer $tipoFactura         [description]
+     * @param  int|integer $tipoDocumentoSector [description]
+     * @return [type]                           [description]
+     */
     public function generarCUF(
         int $timestamp,
         int $nroFactura,

@@ -2,7 +2,7 @@
 
 namespace Enors\Siat\Facturas;
 
-class FacturaCompraVentaDetalle
+abstract class AbstractFacturaDetalle
 {
     public $actividadEconomica = '';
     public $codigoProductoSin = '';
