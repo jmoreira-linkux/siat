@@ -40,6 +40,10 @@ class Siat
 
     const SIAT_FACTURACION_COMPRA_VENTA_WSDL =
         'https://pilotosiatservicios.impuestos.gob.bo/v2/ServicioFacturacionCompraVenta?wsdl';
+    const SIAT_FACTURACION_SECTOR_EDUCACION_WSDL = 
+        'https://pilotosiatservicios.impuestos.gob.bo/v2/ServicioFacturacionComputarizada?wsdl';
+
+    const SIAT_RECEPCION_COMPRA = 'https://pilotosiatservicios.impuestos.gob.bo/v2/ServicioRecepcionCompras?wsdl';
     const SIAT_CODIGOS_WSDL = 'https://pilotosiatservicios.impuestos.gob.bo/v2/FacturacionCodigos?wsdl';
     const SIAT_SINCRONIZACION_WSDL = 'https://pilotosiatservicios.impuestos.gob.bo/v2/FacturacionSincronizacion?wsdl';
     const SIAT_OPERACIONES_WSDL = 'https://pilotosiatservicios.impuestos.gob.bo/v2/FacturacionOperaciones?wsdl';

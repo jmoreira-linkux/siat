@@ -13,6 +13,4 @@ abstract class AbstractFacturaDetalle
     public $precioUnitario = '';
     public $montoDescuento = null;
     public $subTotal = '';
-    public $numeroSerie = null;
-    public $numeroImei = null;
 }

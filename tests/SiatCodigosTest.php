@@ -11,6 +11,7 @@ class SiatCodigosTest extends TestCase
     {
         $siat = new SiatCodigos($_ENV['SIAT_CODIGO_SISTEMA'], $_ENV['SIAT_NIT'], $_ENV['SIAT_API_KEY']);
         $cuis0 = $siat->solicitarCUIS();
+        var_dump($cuis0);
         $this->assertNotEmpty($cuis0->codigo);
         $this->assertNotEmpty($cuis0->fechaVigencia);
     }
@@ -20,6 +21,7 @@ class SiatCodigosTest extends TestCase
         $siat = new SiatCodigos($_ENV['SIAT_CODIGO_SISTEMA'], $_ENV['SIAT_NIT'], $_ENV['SIAT_API_KEY']);
         $cuis0 = $siat->solicitarCUIS();
         $cufd0 = $siat->solicitarCUFD($cuis0->codigo);
+        var_dump($cufd0);
         $this->assertNotEmpty($cufd0->codigo);
         $this->assertNotEmpty($cufd0->codigoControl);
     }

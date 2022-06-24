@@ -15,9 +15,9 @@ abstract class AbstractFactura implements Facturable
     public $numeroFactura = '';
     public $cufd = '';
     public $cuis = '';
-    public $codigoControl = '';
-    public $codigoEmision = 0;
-    public $codigoModalidad = 0;
+    public $codigoControl = '';//se obtiene de cufd
+    public $codigoEmision = 0;//es una constante
+    public $codigoModalidad = 0;//es una constante
     public $codigoSucursal = 0;
     public $direccion = '';
     public $codigoPuntoVenta = 0;
