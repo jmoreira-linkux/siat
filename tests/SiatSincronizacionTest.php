@@ -60,7 +60,6 @@ class SiatSincronizacionTest extends TestCase
     public function testSincronizarParametricaListaProductosServicios()
     {
         $response0 = self::$siat0->sincronizarParametricaListaProductosServicios(self::$cuis0);
-        print_r($response0);
         $this->assertGreaterThan(0, count($response0->listaCodigos));
         $this->assertIsString($response0->listaCodigos[0]->codigoActividad);
         $this->assertIsInt($response0->listaCodigos[0]->codigoProducto);

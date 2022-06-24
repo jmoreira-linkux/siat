@@ -35,7 +35,7 @@ class SiatFacturacionComputarizadaSectorEducativo extends TestCase
         );
     }
 
-    /*public function testGenerarCUF()
+    public function testGenerarCUF()
     {
         date_default_timezone_set(self::DEFAULT_TIMEZONE);
 
@@ -54,7 +54,6 @@ class SiatFacturacionComputarizadaSectorEducativo extends TestCase
         $factura->numeroFactura = 1;
 
         $cuf = $factura->getCuf();
-        var_dump("cuf generate: ".$cuf);
         $this->assertEquals('8727F63A15F8976591F1ED18C702AE5A95B9E06A0A19E23EF34124CD', $cuf);
     }
 
@@ -118,7 +117,7 @@ class SiatFacturacionComputarizadaSectorEducativo extends TestCase
 
         $xml = MarshalXml::serializeItem(new FacturaSectorEducativoMapper(), $facturaSectorEducativo);
         $this->assertXmlStringEqualsXmlFile(__DIR__ . '/xml/facturaComputarizadaSectorEducativo.xml', $xml);
-    }*/
+    }
 
     public function testRecepcionFacturaSectorEducativo()
     {
@@ -178,9 +177,7 @@ class SiatFacturacionComputarizadaSectorEducativo extends TestCase
         $facturaSectorEducativo->cufd = self::$cufd0->codigo;
         $facturaSectorEducativo->codigoControl = self::$cufd0->codigoControl;
         $facturaSectorEducativo->cuis = self::$cuis0;
-        var_dump($facturaSectorEducativo);
         $response0 = self::$siat0->recepcionFactura($facturaSectorEducativo);
-        var_dump($response0);
         $this->assertEquals(true, $response0->transaccion);
         $this->assertNotEmpty($response0->codigoRecepcion);
     }
