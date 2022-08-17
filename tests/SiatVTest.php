@@ -49,13 +49,13 @@ class SiatVTest extends TestCase
     public function testSolicitarCUFD()
     {
         for ($i=0; $i < self::CUFD_EXPECTED_TESTS; $i++) {
-            $cufd0 = $siat->solicitarCUFD(self::$cuis0);
+            $cufd0 = self::$siat0->solicitarCUFD(self::$cuis0);
             $this->assertNotEmpty($cufd0->codigo);
             $this->assertNotEmpty($cufd0->codigoControl);
         }
 
         for ($i=0; $i < self::CUFD_EXPECTED_TESTS; $i++) {
-            $cufd1 = $siat->solicitarCUFD(self::$cuis1);
+            $cufd1 = self::$siat1->solicitarCUFD(self::$cuis1);
             $this->assertNotEmpty($cufd1->codigo);
             $this->assertNotEmpty($cufd1->codigoControl);
         }
