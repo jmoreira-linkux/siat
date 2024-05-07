@@ -18,5 +18,6 @@ class RespuestaServicioFacturacion
         $this->codigoRecepcion = isset($object->codigoRecepcion) ? $object->codigoRecepcion: null;
         $this->mensajesList = isset($object->mensajesList) ? $object->mensajesList : [];
         $this->transaccion = $object->transaccion;
+        $this->codigosRespuestas = isset($object->codigosRespuestas) ? $object->codigosRespuestas : [];
     }
 }

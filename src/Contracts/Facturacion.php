@@ -15,5 +15,6 @@ interface Facturacion
         PaqueteFacturable $paqueteFactura,
         int $codigoEvento
     ): RespuestaServicioFacturacion;
+    public function reversionAnulacionFactura(AbstractFactura $factura): RespuestaServicioFacturacion;
     public function validacionRecepcionPaqueteFactura(PaqueteFacturable $paqueteFactura): RespuestaServicioFacturacion;
 }

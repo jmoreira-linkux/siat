@@ -11,6 +11,7 @@ abstract class AbstractPaquete implements PaqueteFacturable
     public $codigoRecepcion = null;
     public $cufd = '';
     public $cuis = '';
+    public $cafc = '';
     public $nitEmisor = 0;
     public $facturas = [];
     public $tipoFacturaDocumento = 0;
@@ -68,5 +69,10 @@ abstract class AbstractPaquete implements PaqueteFacturable
     public function getTipoFacturaDocumento(): int
     {
         return $this->tipoFacturaDocumento;
+    }
+
+    public function getCafc(): string
+    {
+        return $this->cafc;
     }
 }

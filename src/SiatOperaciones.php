@@ -25,10 +25,10 @@ class SiatOperaciones extends AbstractSiat implements Operaciones
         $response = $this->client->consultaEventoSignificativo([
             'SolicitudConsultaEvento' => [
                 'codigoAmbiente' => $this->codigoAmbiente,
-                'codigoSistema' => $this->codigoSistema,
+                'codigoSistema' => htmlspecialchars($this->codigoSistema, ENT_XML1),
                 'nit' => $this->nit,
-                'cuis' => $cuis,
-                'cufd' => $cufd,
+                'cuis' => htmlspecialchars($cuis, ENT_XML1),
+                'cufd' => htmlspecialchars($cufd, ENT_XML1),
                 'codigoSucursal' => $this->codigoSucursal,
                 'codigoPuntoVenta' => $this->codigoPuntoVenta,
                 'fechaEvento' => date(SiatConstants::DATE_FORMAT, $timestamp)
@@ -45,18 +45,18 @@ class SiatOperaciones extends AbstractSiat implements Operaciones
         $response = $this->client->registroEventoSignificativo([
             'SolicitudEventoSignificativo' => [
                 'codigoAmbiente' => $this->codigoAmbiente,
-                'codigoSistema' => $this->codigoSistema,
+                'codigoSistema' => htmlspecialchars($this->codigoSistema, ENT_XML1),
                 'nit' => $this->nit,
-                'cuis' => $cuis,
-                'cufd' => $cufd,
+                'cuis' => htmlspecialchars($cuis, ENT_XML1),
+                'cufd' => htmlspecialchars($cufd, ENT_XML1),
                 'codigoSucursal' => $this->codigoSucursal,
                 'codigoPuntoVenta' => $this->codigoPuntoVenta,
                 'codigoMotivoEvento' => $eventoSignificativo->codigoEvento,
-                'descripcion' => $eventoSignificativo->descripcion,
+                'descripcion' => htmlspecialchars($eventoSignificativo->descripcion, ENT_XML1),
                 'fechaHoraInicioEvento' =>
                     date(SiatConstants::DATE_TIME_FORMAT, $eventoSignificativo->fechaInicioEvento),
                 'fechaHoraFinEvento' => date(SiatConstants::DATE_TIME_FORMAT, $eventoSignificativo->fechaFinEvento),
-                'cufdEvento' => $cufd
+                'cufdEvento' => $eventoSignificativo->cufdEvento
             ],
         ]);
         return new RespuestaListaEventos($response->RespuestaListaEventos);
@@ -68,13 +68,13 @@ class SiatOperaciones extends AbstractSiat implements Operaciones
             'SolicitudRegistroPuntoVenta' => [
                 'codigoAmbiente' => $this->codigoAmbiente,
                 'codigoModalidad' => $this->codigoModalidad,
-                'codigoSistema' => $this->codigoSistema,
+                'codigoSistema' => htmlspecialchars($this->codigoSistema, ENT_XML1),
                 'codigoSucursal' => $this->codigoSucursal,
                 'codigoTipoPuntoVenta' => $puntoVenta->codigoTipoPuntoVenta,
-                'cuis' => $cuis,
-                'descripcion' => $puntoVenta->descripcion,
+                'cuis' => htmlspecialchars($cuis, ENT_XML1),
+                'descripcion' => htmlspecialchars($puntoVenta->descripcion, ENT_XML1),
                 'nit' => $this->nit,
-                'nombrePuntoVenta' => $puntoVenta->nombrePuntoVenta
+                'nombrePuntoVenta' => htmlspecialchars($puntoVenta->nombrePuntoVenta, ENT_XML1)
             ],
         ]);
         return new RespuestaRegistroPuntoVenta($response->RespuestaRegistroPuntoVenta);
@@ -85,9 +85,9 @@ class SiatOperaciones extends AbstractSiat implements Operaciones
         $response = $this->client->consultaPuntoVenta([
             'SolicitudConsultaPuntoVenta' => [
                 'codigoAmbiente' => $this->codigoAmbiente,
-                'codigoSistema' => $this->codigoSistema,
+                'codigoSistema' => htmlspecialchars($this->codigoSistema, ENT_XML1),
                 'codigoSucursal' => $this->codigoSucursal,
-                'cuis' => $cuis,
+                'cuis' => htmlspecialchars($cuis, ENT_XML1),
                 'nit' => $this->nit,
             ],
         ]);
@@ -100,9 +100,9 @@ class SiatOperaciones extends AbstractSiat implements Operaciones
             'SolicitudCierrePuntoVenta' => [
                 'codigoAmbiente' => $this->codigoAmbiente,
                 'codigoPuntoVenta' => $this->codigoPuntoVenta,
-                'codigoSistema' => $this->codigoSistema,
+                'codigoSistema' => htmlspecialchars($this->codigoSistema, ENT_XML1),
                 'codigoSucursal' => $this->codigoSucursal,
-                'cuis' => $cuis,
+                'cuis' => htmlspecialchars($cuis, ENT_XML1),
                 'nit' => $this->nit,
             ],
         ]);
@@ -114,10 +114,10 @@ class SiatOperaciones extends AbstractSiat implements Operaciones
         $response = $this->client->cierreOperacionesSistema([
             'SolicitudOperaciones' => [
                 'codigoAmbiente' => $this->codigoAmbiente,
-                'codigoSistema' => $this->codigoSistema,
+                'codigoSistema' => htmlspecialchars($this->codigoSistema, ENT_XML1),
                 'nit' => $this->nit,
                 'codigoModalidad' => $this->codigoModalidad,
-                'cuis' => $cuis,
+                'cuis' => htmlspecialchars($cuis, ENT_XML1),
                 'codigoSucursal' => $this->codigoSucursal,
                 'codigoPuntoVenta' => $this->codigoPuntoVenta,
             ],

@@ -8,11 +8,13 @@ class EventoSignificativo
         int $codigoEvento,
         string $descripcion,
         int $fechaInicioEvento,
-        int $fechaFinEvento
+        int $fechaFinEvento,
+        string $cufdEvento
     ) {
         $this->codigoEvento = $codigoEvento;
         $this->descripcion = $descripcion;
         $this->fechaInicioEvento = $fechaInicioEvento;
         $this->fechaFinEvento = $fechaFinEvento;
+        $this->cufdEvento = $cufdEvento;
     }
 }

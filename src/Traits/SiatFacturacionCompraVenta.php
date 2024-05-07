@@ -7,6 +7,9 @@ use KingsonDe\Marshal\MarshalXml;
 use Enors\Siat\Facturas\FacturaCompraVenta;
 use Enors\Siat\Mappers\FacturaCompraVentaMapper;
 
+/**
+ * @deprecated
+ */
 trait SiatFacturacionCompraVenta
 {
     private function getFacturacionComputarizadaClient()

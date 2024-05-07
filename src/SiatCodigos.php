@@ -5,6 +5,7 @@ namespace Enors\Siat;
 use Enors\Siat\Contracts\Codigos;
 use Enors\Siat\Responses\RespuestaCufd;
 use Enors\Siat\Responses\RespuestaCuis;
+use Enors\Siat\Responses\RespuestaVerificaNit;
 
 class SiatCodigos extends AbstractSiat implements Codigos
 {
@@ -27,10 +28,10 @@ class SiatCodigos extends AbstractSiat implements Codigos
         $response = $this->client->cufd([
             'SolicitudCufd' => [
                 'codigoAmbiente' => $this->codigoAmbiente,
-                'codigoSistema' => $this->codigoSistema,
+                'codigoSistema' => htmlspecialchars($this->codigoSistema, ENT_XML1),
                 'nit' => $this->nit,
                 'codigoModalidad' => $this->codigoModalidad,
-                'cuis' => $cuis,
+                'cuis' => htmlspecialchars($cuis, ENT_XML1),
                 'codigoSucursal' => $this->codigoSucursal,
                 'codigoPuntoVenta' => $this->codigoPuntoVenta,
             ]
@@ -48,7 +49,7 @@ class SiatCodigos extends AbstractSiat implements Codigos
         $response = $this->client->cuis([
             'SolicitudCuis' => [
                 'codigoAmbiente' => $this->codigoAmbiente,
-                'codigoSistema' => $this->codigoSistema,
+                'codigoSistema' => htmlspecialchars($this->codigoSistema, ENT_XML1),
                 'nit' => $this->nit,
                 'codigoModalidad' => $this->codigoModalidad,
                 'codigoSucursal' => $this->codigoSucursal,
@@ -57,5 +58,28 @@ class SiatCodigos extends AbstractSiat implements Codigos
         ]);
 
         return new RespuestaCuis($response->RespuestaCuis);
+    }
+
+    /**
+     * Verificación de Nit.
+     *
+     * @return RespuestaVerificaNit
+     */
+    public function verificarNit(string $cuis, string $nit): RespuestaVerificaNit
+    {
+        $response = $this->client->verificarNit([
+            'SolicitudVerificarNit' => [
+                'codigoAmbiente' => $this->codigoAmbiente,
+                'codigoSistema' => htmlspecialchars($this->codigoSistema, ENT_XML1),
+                'nit' => $this->nit,
+                'codigoModalidad' => $this->codigoModalidad,
+                'codigoSucursal' => $this->codigoSucursal,
+                'codigoPuntoVenta' => $this->codigoPuntoVenta,
+                'cuis' => htmlspecialchars($cuis, ENT_XML1),
+                'nitParaVerificacion' => $nit,
+            ],
+        ]);
+
+        return new RespuestaVerificaNit($response->RespuestaVerificarNit);
     }
 }

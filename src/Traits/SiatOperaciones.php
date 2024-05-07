@@ -5,6 +5,9 @@ namespace Enors\Siat\Traits;
 use Enors\Siat\EventoSignificativo;
 use Enors\Siat\PuntoVenta;
 
+/**
+ * @deprecated
+ */
 trait SiatOperaciones
 {
     private function getOperacionesClient()

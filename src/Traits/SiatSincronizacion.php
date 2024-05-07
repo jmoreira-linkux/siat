@@ -2,6 +2,9 @@
 
 namespace Enors\Siat\Traits;
 
+/**
+ * @deprecated
+ */
 trait SiatSincronizacion
 {
     private function getSincronizacionClient()

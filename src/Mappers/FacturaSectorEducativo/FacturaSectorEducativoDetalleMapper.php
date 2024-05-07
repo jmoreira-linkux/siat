@@ -10,10 +10,10 @@ class FacturaSectorEducativoDetalleMapper extends AbstractMapper
     public function map(FacturaSectorEducativoDetalle $detalle)
     {
         $map = [
-            'actividadEconomica' => $detalle->actividadEconomica,
+            'actividadEconomica' => htmlspecialchars($detalle->actividadEconomica, ENT_XML1),
             'codigoProductoSin' => $detalle->codigoProductoSin,
-            'codigoProducto' => $detalle->codigoProducto,
-            'descripcion' => $detalle->descripcion,
+            'codigoProducto' => htmlspecialchars($detalle->codigoProducto, ENT_XML1),
+            'descripcion' => htmlspecialchars($detalle->descripcion, ENT_XML1),
             'cantidad' => $detalle->cantidad,
             'unidadMedida' => $detalle->unidadMedida,
             'precioUnitario' => $detalle->precioUnitario,

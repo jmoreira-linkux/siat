@@ -24,9 +24,9 @@ class SiatSincronizacion extends AbstractSiat implements Sincronizacion
         $response = $this->client->$syncMethod([
             'SolicitudSincronizacion' => [
                 'codigoAmbiente' => $this->codigoAmbiente,
-                'codigoSistema' => $this->codigoSistema,
+                'codigoSistema' => htmlspecialchars($this->codigoSistema, ENT_XML1),
                 'nit' => $this->nit,
-                'cuis' => $cuis,
+                'cuis' => htmlspecialchars($cuis, ENT_XML1),
                 'codigoSucursal' => $this->codigoSucursal,
                 'codigoPuntoVenta' => $this->codigoPuntoVenta,
             ],

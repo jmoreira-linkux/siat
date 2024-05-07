@@ -37,14 +37,14 @@ abstract class AbstractFacturacion extends AbstractSiat implements Facturacion
             'SolicitudServicioRecepcionFactura' => [
                 'codigoAmbiente' => $this->codigoAmbiente,
                 'codigoPuntoVenta' => $this->codigoPuntoVenta,
-                'codigoSistema' => $this->codigoSistema,
+                'codigoSistema' => htmlspecialchars($this->codigoSistema, ENT_XML1),
                 'codigoSucursal' => $this->codigoSucursal,
                 'nit' => $factura->getNitEmisor(),
                 'codigoDocumentoSector' => $factura->getCodigoDocumentoSector(),
                 'codigoEmision' => $factura->getCodigoEmision(),
                 'codigoModalidad' => $factura->getCodigoModalidad(),
-                'cufd' => $factura->getCufd(),
-                'cuis' => $factura->getCuis(),
+                'cufd' => htmlspecialchars($factura->getCufd(), ENT_XML1),
+                'cuis' => htmlspecialchars($factura->getCuis(), ENT_XML1),
                 'tipoFacturaDocumento' => $factura->getTipoFacturaDocumento(),
                 'archivo' => $this->compressXMLFactura($archivo),
                 'fechaEnvio' => date(SiatConstants::DATE_TIME_FORMAT, time()),
@@ -82,19 +82,19 @@ abstract class AbstractFacturacion extends AbstractSiat implements Facturacion
             'SolicitudServicioRecepcionPaquete' => [
                 'codigoAmbiente' => $this->codigoAmbiente,
                 'codigoPuntoVenta' => $this->codigoPuntoVenta,
-                'codigoSistema' => $this->codigoSistema,
+                'codigoSistema' => htmlspecialchars($this->codigoSistema, ENT_XML1),
                 'codigoSucursal' => $this->codigoSucursal,
                 'nit' => $paqueteFactura->getNitEmisor(),
                 'codigoDocumentoSector' => $paqueteFactura->getCodigoDocumentoSector(),
                 'codigoEmision' => $paqueteFactura->getCodigoEmision(),
                 'codigoModalidad' => $paqueteFactura->getCodigoModalidad(),
-                'cufd' => $paqueteFactura->getCufd(),
-                'cuis' => $paqueteFactura->getCuis(),
+                'cufd' => htmlspecialchars($paqueteFactura->getCufd(), ENT_XML1),
+                'cuis' => htmlspecialchars($paqueteFactura->getCuis(), ENT_XML1),
                 'tipoFacturaDocumento' => $paqueteFactura->getTipoFacturaDocumento(),
                 'archivo' => $archivo,
                 'fechaEnvio' => date(SiatConstants::DATE_TIME_FORMAT, time()),
                 'hashArchivo' => $this->firmarFactura($archivo),
-                'cafc' => '',
+                'cafc' => htmlspecialchars($paqueteFactura->getCafc(), ENT_XML1),
                 'cantidadFacturas' => count($paqueteFactura->getFacturas()),
                 'codigoEvento' => $codigoEvento,
             ]
@@ -108,16 +108,16 @@ abstract class AbstractFacturacion extends AbstractSiat implements Facturacion
             'SolicitudServicioValidacionRecepcionPaquete' => [
                 'codigoAmbiente' => $this->codigoAmbiente,
                 'codigoPuntoVenta' => $this->codigoPuntoVenta,
-                'codigoSistema' => $this->codigoSistema,
+                'codigoSistema' => htmlspecialchars($this->codigoSistema, ENT_XML1),
                 'codigoSucursal' => $this->codigoSucursal,
                 'nit' => $paqueteFactura->getNitEmisor(),
                 'codigoDocumentoSector' => $paqueteFactura->getCodigoDocumentoSector(),
                 'codigoEmision' => $paqueteFactura->getCodigoEmision(),
                 'codigoModalidad' => $paqueteFactura->getCodigoModalidad(),
-                'cufd' => $paqueteFactura->getCufd(),
-                'cuis' => $paqueteFactura->getCuis(),
+                'cufd' => htmlspecialchars($paqueteFactura->getCufd(), ENT_XML1),
+                'cuis' => htmlspecialchars($paqueteFactura->getCuis(), ENT_XML1),
                 'tipoFacturaDocumento' => $paqueteFactura->getTipoFacturaDocumento(),
-                'codigoRecepcion' => $paqueteFactura->getCodigoRecepcion(),
+                'codigoRecepcion' => htmlspecialchars($paqueteFactura->getCodigoRecepcion(), ENT_XML1),
             ]
         ]);
         return new RespuestaServicioFacturacion($response->RespuestaServicioFacturacion);
@@ -129,17 +129,38 @@ abstract class AbstractFacturacion extends AbstractSiat implements Facturacion
             'SolicitudServicioAnulacionFactura' => [
                 'codigoAmbiente' => $this->codigoAmbiente,
                 'codigoPuntoVenta' => $this->codigoPuntoVenta,
-                'codigoSistema' => $this->codigoSistema,
+                'codigoSistema' => htmlspecialchars($this->codigoSistema, ENT_XML1),
                 'codigoSucursal' => $this->codigoSucursal,
                 'nit' => $factura->getNitEmisor(),
                 'codigoDocumentoSector' => $factura->getCodigoDocumentoSector(),
                 'codigoEmision' => $factura->getCodigoEmision(),
                 'codigoModalidad' => $factura->getCodigoModalidad(),
-                'cufd' => $factura->getCufd(),
-                'cuis' => $factura->getCuis(),
+                'cufd' => htmlspecialchars($factura->getCufd(), ENT_XML1),
+                'cuis' => htmlspecialchars($factura->getCuis(), ENT_XML1),
                 'tipoFacturaDocumento' => $factura->getTipoFacturaDocumento(),
                 'codigoMotivo' => $codigoMotivo,
-                'cuf' => $factura->getCuf(),
+                'cuf' => htmlspecialchars($factura->getCuf(), ENT_XML1),
+            ]
+        ]);
+        return new RespuestaServicioFacturacion($response->RespuestaServicioFacturacion);
+    }
+
+    public function reversionAnulacionFactura(Facturable $factura): RespuestaServicioFacturacion
+    {
+        $response = $this->client->reversionAnulacionFactura([
+            'SolicitudServicioReversionAnulacionFactura' => [
+                'codigoAmbiente' => $this->codigoAmbiente,
+                'codigoPuntoVenta' => $this->codigoPuntoVenta,
+                'codigoSistema' => htmlspecialchars($this->codigoSistema, ENT_XML1),
+                'codigoSucursal' => $this->codigoSucursal,
+                'nit' => $factura->getNitEmisor(),
+                'codigoDocumentoSector' => $factura->getCodigoDocumentoSector(),
+                'codigoEmision' => $factura->getCodigoEmision(),
+                'codigoModalidad' => $factura->getCodigoModalidad(),
+                'cufd' => htmlspecialchars($factura->getCufd(), ENT_XML1),
+                'cuis' => htmlspecialchars($factura->getCuis(), ENT_XML1),
+                'tipoFacturaDocumento' => $factura->getTipoFacturaDocumento(),
+                'cuf' => htmlspecialchars($factura->getCuf(), ENT_XML1),
             ]
         ]);
         return new RespuestaServicioFacturacion($response->RespuestaServicioFacturacion);

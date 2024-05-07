@@ -2,6 +2,9 @@
 
 namespace Enors\Siat\Traits;
 
+/**
+ * @deprecated
+ */
 trait SiatCodigos
 {
     private function getCodigosClient()
