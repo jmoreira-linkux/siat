@@ -1907,6 +1907,109 @@ class SiatVTest extends TestCase
         var_dump($numeroFactura);
     }
 
+    public function testValidacionRecepcionPaqueteFactura()
+    {
+        date_default_timezone_set(self::DEFAULT_TIMEZONE);
+
+        $siatFacturaCompraVenta0 = new SiatFacturacionCompraVenta(
+            $_ENV['SIAT_CODIGO_SISTEMA'],
+            $_ENV['SIAT_NIT'],
+            $_ENV['SIAT_API_KEY'],
+            self::CODIGO_PUNTO_VENTA_0,
+            0,
+            SiatConstants::MODALIDAD_COMPUTARIZADA
+        );
+
+        $codigoRecepcionEvento0 = 1711366;
+        $cufdContingencia0 = 'BQT5DcDBpQUE=NzTEwNTdDMTA0Mzc=Q1U2d0pYRUJYVUFI1RjhGOEExQTI4O';
+        $cufdContingenciaControlCode0 = '3509A05A91A8E74';
+        $cufd0 = self::$siatCodigos0->solicitarCUFD(self::$cuis0);
+
+        $numeroFactura = 2100000;
+        for ($i=0; $i < self::EMISION_PAQUETE_FACTURA_EXPECTED_TESTS * 7; $i++) { 
+            $facturas = self::generateInvoices(
+                10,
+                self::$cuis0,
+                $cufdContingencia0,
+                $cufdContingenciaControlCode0,
+                strtotime('2023-01-03 23:19:00'),
+                self::CODIGO_PUNTO_VENTA_0,
+                $numeroFactura
+            );
+            
+            $paqueteFactura = new PaqueteFacturaCompraVenta($facturas);
+            $paqueteFactura->cufd = $cufd0->codigo;
+            $paqueteFactura->cuis = self::$cuis0;
+            $paqueteFactura->nitEmisor = intval($_ENV['SIAT_NIT']);
+            $paqueteFactura->codigoEmision = SiatConstants::EMISION_OFFLINE;
+            $paqueteFactura->codigoModalidad = SiatConstants::MODALIDAD_COMPUTARIZADA;
+            $paqueteFactura->tipoFacturaDocumento = SiatConstants::FACTURA_CON_DERECHO_CREDITO_FISCAL;
+            $paqueteFactura->cafc = '';
+
+            $response0 = $siatFacturaCompraVenta0->recepcionPaqueteFactura($paqueteFactura, $codigoRecepcionEvento0);
+
+            sleep(10);
+
+            $paqueteFactura->codigoRecepcion = $response0->codigoRecepcion;
+            $response1 = $siatFacturaCompraVenta0->validacionRecepcionPaqueteFactura($paqueteFactura);
+            var_dump('ValidacionReceptcionPaqueteFactura0');
+            var_dump($response1);
+            $this->assertEquals(true, $response1->transaccion);
+
+            $numeroFactura += 10;
+        }
+
+        $siatFacturaCompraVenta1 = new SiatFacturacionCompraVenta(
+            $_ENV['SIAT_CODIGO_SISTEMA'],
+            $_ENV['SIAT_NIT'],
+            $_ENV['SIAT_API_KEY'],
+            self::CODIGO_PUNTO_VENTA_1,
+            0,
+            SiatConstants::MODALIDAD_COMPUTARIZADA
+        );
+
+        $codigoRecepcionEvento1 = 1711367;
+        $cufdContingencia1 = 'BQW9CfSNHSUE=N0zQzMzE2MDlEM0U=Qz4mTmNNRkZZVUJM0Q0E5N0JDQTdBQ';
+        $cufdContingenciaControlCode1 = '64ECA05A91A8E74';
+        $cufd1 = self::$siatCodigos1->solicitarCUFD(self::$cuis1);
+
+        for ($i=0; $i < self::EMISION_PAQUETE_FACTURA_EXPECTED_TESTS * 7; $i++) {
+            $facturas = self::generateInvoices(
+                10,
+                self::$cuis1,
+                $cufdContingencia1,
+                $cufdContingenciaControlCode1,
+                strtotime('2023-01-03 23:19:00'),
+                self::CODIGO_PUNTO_VENTA_1,
+                $numeroFactura
+            );
+
+            $paqueteFactura = new PaqueteFacturaCompraVenta($facturas);
+            $paqueteFactura->cufd = $cufd1->codigo;
+            $paqueteFactura->cuis = self::$cuis1;
+            $paqueteFactura->nitEmisor = intval($_ENV['SIAT_NIT']);
+            $paqueteFactura->codigoEmision = SiatConstants::EMISION_OFFLINE;
+            $paqueteFactura->codigoModalidad = SiatConstants::MODALIDAD_COMPUTARIZADA;
+            $paqueteFactura->tipoFacturaDocumento = SiatConstants::FACTURA_CON_DERECHO_CREDITO_FISCAL;
+            $paqueteFactura->cafc = '';
+
+            $response0 = $siatFacturaCompraVenta1->recepcionPaqueteFactura($paqueteFactura, $codigoRecepcionEvento1);
+            
+            sleep(10);
+
+            $paqueteFactura->codigoRecepcion = $response0->codigoRecepcion;
+            $response1 = $siatFacturaCompraVenta1->validacionRecepcionPaqueteFactura($paqueteFactura);
+            var_dump('ValidacionReceptcionPaqueteFactura1');
+            var_dump($response1);
+            $this->assertEquals(true, $response1->transaccion);
+            
+            $numeroFactura += 10;
+        }
+
+        var_dump('LAST NRO FACTURA');
+        var_dump($numeroFactura);
+    }
+
     public function testAnulacionFactura()
     {
         date_default_timezone_set(self::DEFAULT_TIMEZONE);
